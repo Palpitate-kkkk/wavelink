@@ -4,7 +4,7 @@
 
 Reproducible wireless-link experiments for propagation-aware receiver design.
 
-**状态：开发初期 / 项目实践。** 当前仅完成归一化 QPSK、带循环前缀的 OFDM 基础模块、无噪声回环及确定性多径验证。尚无研究性能提升结论，不包含硬件实测。
+**状态：开发初期 / 项目实践。** 已完成 QPSK/OFDM 基础模块、复基带 AWGN 与理论 BER 对照，含循环前缀能量约定、独立重复及置信区间。尚无研究性能提升结论，不包含硬件实测。
 
 ## 研究问题
 
@@ -48,7 +48,7 @@ docs/experiments.md 实验记录与公平比较约定
 
 ## 后续里程碑
 
-1. AWGN 基线与理论 BER 对照，明确 SNR / Eb/N0 及开销定义。
+1. **已完成**：AWGN 基线与理论 BER 对照，明确 SNR / Eb/N0 及开销定义。
 2. 多径、导频、LS 信道估计与均衡；分别引入同步误差和补偿。
 3. 信道统计失配下的算法对比、独立重复实验及失败边界。
 4. 根据结果延伸到调制识别、SDR 回放/接收、无线边缘任务调度。
@@ -61,3 +61,16 @@ docs/experiments.md 实验记录与公平比较约定
 - [NVIDIA Sionna: Neural Receiver](https://nvlabs.github.io/sionna/phy/tutorials/notebooks/Neural_Receiver.html)
 
 上述资料作为参考，当前代码为基础模块实现，不宣称复现其完整系统。后续引入外部代码或数据时单独记录来源、版本及许可。
+
+## AWGN 基线（已验证）
+
+```bash
+python -m pip install -e '.[plots]' -c experiments/requirements.txt
+python experiments/awgn_ber.py --config experiments/awgn.json --output results/awgn --plot
+```
+
+默认进行 30 次固定预算仿真，10 个汇总点，每点 3,072,000 比特。`useful` 排除 CP 能量；`transmitted` 包含期望 CP 能量。两种约定须分别与各自理论曲线比较。
+
+![AWGN BER](reports/awgn/ber.svg)
+
+[方法、实际结果与局限](docs/awgn.md) · [汇总数据](reports/awgn/summary.csv) · [逐种子数据](reports/awgn/runs.csv) · [来源与环境](reports/awgn/metadata.json)

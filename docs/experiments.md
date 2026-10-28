@@ -25,4 +25,4 @@
 
 示例：`PYTHONPATH=src python3 examples/noiseless_loopback.py`
 
-正式蒙特卡洛评测尚未实现；当前测试仅覆盖基础模块，不支持任何性能优越性结论。
+AWGN 固定预算蒙特卡洛评测已实现，见 [AWGN 报告](awgn.md)。当前不支持任何算法性能优越性结论。

@@ -1,0 +1,9 @@
+{
+  "n_fft": 64,
+  "cp_len": 16,
+  "ebn0_db": [0, 2, 4, 6, 8],
+  "seeds": [20261028, 20261029, 20261030],
+  "bits_per_seed": 1024000,
+  "batch_symbols": 200,
+  "conventions": ["useful", "transmitted"]
+}
