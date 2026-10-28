@@ -1,0 +1,89 @@
+{
+  "config": {
+    "sample_rate_hz": 1000000,
+    "cp_lengths": [
+      16,
+      2
+    ],
+    "pilot_spacings": [
+      2,
+      4
+    ],
+    "ebn0_db": [
+      0,
+      6,
+      12,
+      18
+    ],
+    "seeds": [
+      31001,
+      31002,
+      31003
+    ],
+    "frames_per_seed": 40,
+    "symbols_per_frame": 20,
+    "channels": [
+      {
+        "name": "short",
+        "delays": [
+          0,
+          1,
+          3
+        ],
+        "gains": [
+          [
+            0.8,
+            0.6
+          ],
+          [
+            0.3,
+            -0.2
+          ],
+          [
+            0.1,
+            0.1
+          ]
+        ]
+      },
+      {
+        "name": "long",
+        "delays": [
+          0,
+          4,
+          12
+        ],
+        "gains": [
+          [
+            0.8,
+            0.6
+          ],
+          [
+            0.3,
+            -0.2
+          ],
+          [
+            0.2,
+            0.25
+          ]
+        ]
+      }
+    ]
+  },
+  "python": "3.13.5",
+  "numpy": "2.4.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "base_commit": "3b683b9444a46793c59d8e6039a3ab6ac18a7ee2",
+  "working_tree_dirty": true,
+  "source_sha256": {
+    "src/wavelink/__init__.py": "0bd32de7372feb936af66d6096dc2081a95b271fa0210c0a3c09dc61fa929474",
+    "src/wavelink/baseband.py": "8f59ed824e9c1a870209e980bbd910a7c4d39c7a82392abbe99d3edabd7baa59",
+    "src/wavelink/channel.py": "18593324a0aee7a4dfc7c6ee093241a5cfb0493da87665b08793100b4474c0b9",
+    "src/wavelink/receiver.py": "bd6ab319264b327036b2adb200ad4cf2ec08674006eb0f9644266200c181ae44",
+    "experiments/multipath_ber.py": "87161f491bf638ca56b91d050f08677fcd37cd8d174cf3500d0cc15b643d69b4",
+    "experiments/multipath.json": "7c2a9e0fa3c80304ab87577c8d06ac882e745a1c4ce7b5bb4a80532a78e97ea9"
+  },
+  "normalization": "Channel taps normalized once per profile to unit energy; no per-frame receive-power normalization",
+  "energy_convention": "Expected transmitted steady-state energy per data bit, includes pilots and CP; warm-up is simulation boundary setup",
+  "uncertainty": "SE across independent frames conditional on fixed taps; not iid bit-binomial confidence intervals",
+  "stopping_rule": "fixed frames and scored symbols; no early stopping"
+}

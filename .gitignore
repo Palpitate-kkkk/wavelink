@@ -14,3 +14,5 @@ data/
 *.iq
 # Local raster preview; the versioned report uses the SVG figure.
 reports/awgn/*.png
+
+reports/multipath/*.png

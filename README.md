@@ -4,7 +4,7 @@
 
 Reproducible wireless-link experiments for propagation-aware receiver design.
 
-**状态：开发初期 / 项目实践。** 已完成 QPSK/OFDM 基础模块、复基带 AWGN 与理论 BER 对照，含循环前缀能量约定、独立重复及置信区间。尚无研究性能提升结论，不包含硬件实测。
+**状态：开发初期 / 项目实践。** 已完成 QPSK/OFDM 基础模块、复基带 AWGN 与理论 BER 对照，含循环前缀能量约定、独立重复及置信区间；现已加入静态多径、梳状导频、保护子载波、LS 线性插值与 ZF 均衡。尚无研究性能提升结论，不包含硬件实测。
 
 ## 研究问题
 
@@ -32,7 +32,7 @@ Windows 使用 `.venv\Scripts\activate` 激活环境。
 
 - SISO 复基带离散时间模型；QPSK 平均符号能量为 1。
 - IFFT/FFT 使用 `norm="ortho"`；子载波采用 NumPy 原生 FFT 顺序。
-- 当前全部子载波承载数据，未加入 DC/保护子载波、导频或信道编码。
+- AWGN 基线仍使用全数据子载波；多径实验采用独立资源栅格，包含 DC/保护子载波和导频。两者均未加入信道编码。
 - 循环前缀（CP）长度按样本计。无噪声多径测试使用已知信道和理想符号边界。
 - 传播模型不等于 Maxwell 方程全波求解；仿真数据不作为实测数据。
 
@@ -49,7 +49,7 @@ docs/experiments.md 实验记录与公平比较约定
 ## 后续里程碑
 
 1. **已完成**：AWGN 基线与理论 BER 对照，明确 SNR / Eb/N0 及开销定义。
-2. 多径、导频、LS 信道估计与均衡；分别引入同步误差和补偿。
+2. **已完成**：静态多径、导频、LS 信道估计与均衡；同步误差和补偿尚待实现。
 3. 信道统计失配下的算法对比、独立重复实验及失败边界。
 4. 根据结果延伸到调制识别、SDR 回放/接收、无线边缘任务调度。
 
@@ -74,3 +74,17 @@ python experiments/awgn_ber.py --config experiments/awgn.json --output results/a
 ![AWGN BER](reports/awgn/ber.svg)
 
 [方法、实际结果与局限](docs/awgn.md) · [汇总数据](reports/awgn/summary.csv) · [逐种子数据](reports/awgn/runs.csv) · [来源与环境](reports/awgn/metadata.json)
+
+## 静态多径与导频接收（已验证）
+
+```bash
+python experiments/multipath_ber.py --output results/multipath --plot
+```
+
+比较不均衡、理想 CSI + ZF、导频 LS + 线性插值 + ZF。两种固定信道、两种 CP、两种导频密度、四个信噪比、三组种子；接收机共享发送数据、信道和噪声。21 项测试通过，CP 足够时的 16 个理想 CSI 汇总点通过理论回归检查。
+
+![Multipath benchmark](reports/multipath/multipath.svg)
+
+[多径实验报告与边界](docs/multipath.md) · [结果](reports/multipath/summary.csv) · [无噪声诊断](reports/multipath/diagnostics.csv)
+
+已知 CSI 只作为参考；无噪声插值仍可能有偏差。该阶段为静态离散多径仿真，尚未验证移动信道、频偏或硬件接收。
