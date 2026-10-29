@@ -11,7 +11,7 @@ from pathlib import Path
 import numpy as np
 from wavelink import qpsk_demodulate
 from wavelink.estimation import TapDomainLS, TapDomainLMMSE, ensemble_nmse, _tap_powers
-from wavelink.tracking import CausalPilotLMMSE
+from wavelink.tracking import make_tracker
 from wavelink.receiver import comb_grid, ls_channel_estimate, zero_force, pilot_noise_variance
 from experiments.learned_ber import simulate_frame
 from experiments.lmmse_ber import linear_mapping, se
@@ -53,7 +53,7 @@ def episode(cfg, scenario, db, seed, snr_index, trajectory=None):
     for _ in range(cfg['calibration_frames']):
         y,p,_,_=simulate_frame(rng,initial,base_noise,layout,cfg['cp_len'],cfg['symbols_per_frame'])
         calibration.append(y[:,layout.bins(layout.pilot_tones)]/p)
-    trackers={p['name']:CausalPilotLMMSE(np.asarray(calibration),layout,cfg['assumed_length'],p['window'],p['update_every']) for p in cfg['policies']}
+    trackers={p['name']:make_tracker(p,np.asarray(calibration),layout,cfg['assumed_length']) for p in cfg['policies']}
     tap=TapDomainLS(layout,cfg['assumed_length']);linear=linear_mapping(layout)
     names=('oracle_zf','matched','ls_linear','tap_ls',*trackers)
     metrics={name:[] for name in names}
@@ -98,15 +98,20 @@ def episode(cfg, scenario, db, seed, snr_index, trajectory=None):
         if t<cfg['episode_frames']-1:
             for name,tracker in trackers.items():
                 updated=tracker.advance()
-                if updated and t in checkpoints:
+                if updated and (t in checkpoints or hasattr(tracker,'trigger_log')):
                     fit=tracker.statistics
                     events.append(dict(receiver=name,after_frame=t,applies_from_frame=t+1,noise_ratio=fit.noise_variance/noise,
                         pdp_l1_error=float(np.sum(abs(fit.powers-powers))),updates=tracker.update_count))
+                    if hasattr(tracker,'trigger_log'):events[-1].update(tracker.trigger_log[-1])
     costs=[dict(receiver=name,updates=v.update_count,fit_frame_visits=v.fit_frame_visits,
                 initial_fit_ms=v.initial_fit_ns/1e6,total_update_ms=v.update_ns/1e6,
                 max_history_frames=v.history.maxlen,history_complex_values=v.history.maxlen*v.symbols*len(layout.pilot_tones),
                 last_update_after_frame=v.last_update_after_frame,maximum_training_lead=maximum_lead)
            for name,v in trackers.items()]
+    for row in costs:
+        tracker=trackers[row['receiver']]
+        if hasattr(tracker,'trigger_log'):
+            row.update(monitor_checks=tracker.monitor_checks,feature_frames=tracker.feature_frames,feature_ms=tracker.feature_ns/1e6,monitor_ms=tracker.monitor_ns/1e6)
     return {k:np.asarray(v) for k,v in metrics.items()},costs,events
 
 

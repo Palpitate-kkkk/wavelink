@@ -1,0 +1,172 @@
+{
+  "sample_rate_hz": 1000000,
+  "cp_len": 16,
+  "pilot_spacing": 4,
+  "ebn0_db": [
+    6,
+    18
+  ],
+  "onset_min": 64,
+  "phase_cycle": 32,
+  "calibration_frames": 64,
+  "episode_frames": 320,
+  "symbols_per_frame": 20,
+  "assumed_length": 13,
+  "trace_bin_frames": 8,
+  "pre_frames": 32,
+  "early_frames": 64,
+  "late_start_offset": 160,
+  "late_frames": 64,
+  "initial_powers": [
+    0.8,
+    0,
+    0,
+    0,
+    0.12,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0.08
+  ],
+  "changed_powers": [
+    0.1,
+    0,
+    0,
+    0,
+    0.2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0.7
+  ],
+  "scenarios": [
+    {
+      "name": "stationary",
+      "change_pdp": false,
+      "noise_factor": 1.0,
+      "ramp_frames": 0
+    },
+    {
+      "name": "pdp_only",
+      "change_pdp": true,
+      "noise_factor": 1.0,
+      "ramp_frames": 0
+    },
+    {
+      "name": "noise_only",
+      "change_pdp": false,
+      "noise_factor": 4.0,
+      "ramp_frames": 0
+    },
+    {
+      "name": "step",
+      "change_pdp": true,
+      "noise_factor": 4.0,
+      "ramp_frames": 0
+    },
+    {
+      "name": "ramp16",
+      "change_pdp": true,
+      "noise_factor": 4.0,
+      "ramp_frames": 16
+    },
+    {
+      "name": "ramp64",
+      "change_pdp": true,
+      "noise_factor": 4.0,
+      "ramp_frames": 64
+    }
+  ],
+  "policies": [
+    {
+      "name": "frozen",
+      "window": 64,
+      "update_every": null
+    },
+    {
+      "name": "periodic_64_32",
+      "window": 64,
+      "update_every": 32
+    },
+    {
+      "name": "rolling_64",
+      "window": 64,
+      "update_every": 1
+    }
+  ],
+  "development": {
+    "seeds": [
+      81001,
+      81002,
+      81003,
+      81004,
+      81005,
+      81006,
+      81007,
+      81008
+    ],
+    "schedule_seed": 82001
+  },
+  "test": {
+    "seeds": [
+      91001,
+      91002,
+      91003,
+      91004,
+      91005,
+      91006,
+      91007,
+      91008,
+      91009,
+      91010,
+      91011,
+      91012,
+      91013,
+      91014,
+      91015,
+      91016,
+      91017,
+      91018,
+      91019,
+      91020,
+      91021,
+      91022,
+      91023,
+      91024,
+      91025,
+      91026,
+      91027,
+      91028,
+      91029,
+      91030,
+      91031,
+      91032
+    ],
+    "schedule_seed": 92001
+  },
+  "trigger": {
+    "window": 64,
+    "monitor_window": 16,
+    "check_every": 8,
+    "cooldown": 32,
+    "threshold_candidates": [
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ]
+  },
+  "selection": {
+    "max_nmse_ratio_per_cell": 1.05,
+    "max_stationary_mean_updates": 1.0,
+    "phase": "post_all"
+  }
+}

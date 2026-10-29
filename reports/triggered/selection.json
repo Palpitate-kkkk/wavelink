@@ -1,0 +1,55 @@
+{
+  "threshold": 0.75,
+  "development_constraints_met": true,
+  "reason": "fewest mean updates among candidates satisfying every development NMSE cell and stationary-update constraints",
+  "candidates": [
+    {
+      "threshold": 0.25,
+      "worst_nmse_ratio": 1.0028378573303773,
+      "mean_updates": 7.458333333333333,
+      "stationary_mean_updates": 6.3125,
+      "feasible": false
+    },
+    {
+      "threshold": 0.5,
+      "worst_nmse_ratio": 1.0128520083496892,
+      "mean_updates": 3.3645833333333335,
+      "stationary_mean_updates": 1.0,
+      "feasible": true
+    },
+    {
+      "threshold": 0.75,
+      "worst_nmse_ratio": 1.0298909192464516,
+      "mean_updates": 2.25,
+      "stationary_mean_updates": 0.1875,
+      "feasible": true
+    },
+    {
+      "threshold": 1.0,
+      "worst_nmse_ratio": 1.0587360983169722,
+      "mean_updates": 1.71875,
+      "stationary_mean_updates": 0.0625,
+      "feasible": false
+    }
+  ],
+  "locked_at_utc": "2026-10-29T04:48:22.155020+00:00",
+  "source_sha256": {
+    "src/wavelink/__init__.py": "0bd32de7372feb936af66d6096dc2081a95b271fa0210c0a3c09dc61fa929474",
+    "src/wavelink/baseband.py": "8f59ed824e9c1a870209e980bbd910a7c4d39c7a82392abbe99d3edabd7baa59",
+    "src/wavelink/channel.py": "18593324a0aee7a4dfc7c6ee093241a5cfb0493da87665b08793100b4474c0b9",
+    "src/wavelink/estimation.py": "d817eda2eab2c1c096e927981bc25c7085d27d64440adb415b47b59d72fc7e5b",
+    "src/wavelink/receiver.py": "bd6ab319264b327036b2adb200ad4cf2ec08674006eb0f9644266200c181ae44",
+    "src/wavelink/statistics.py": "eb840a7f094f6e762761ae69d0252883530aa5103ac03da5987ac63558c597a0",
+    "src/wavelink/tracking.py": "2c7b771080dd9dab45c7043f3a726003c0fcbb6d4295d4e25c5376b8a5681476",
+    "experiments/triggered_ber.py": "7908281a6652bcebbbd683cca370ef52bf21422c1db1c8c33c04e6f2a2948ed8",
+    "experiments/drift_ber.py": "d1523ac5e59fc16b3f012bb5c11fa53cbbd5204f13878615494e3aa30021771f",
+    "experiments/robustness_ber.py": "e6cf337a4bb48e900bf479511578edef8345c00d829c7dd91379540041ce2c8d",
+    "experiments/learned_ber.py": "7d54e69f61a10a4386c1408f8710ef7c0d1f34efa38a7733d557a5cff88b6541",
+    "experiments/lmmse_ber.py": "a62d6266bb9de08d727f75909df1d09f5b74d0dd26171f36e4994d810504d464",
+    "experiments/multipath_ber.py": "297cd29d0bd1aea5e7af7fa1bfb9356742400a546d3809d9cecedc0887bacf3f",
+    "experiments/triggered.json": "1f8a4dcc777a7ccf5163a6b870c357dbd93b024190a011dfa49bdbae1feddeff"
+  },
+  "config_sha256": "1f8a4dcc777a7ccf5163a6b870c357dbd93b024190a011dfa49bdbae1feddeff",
+  "development_summary_sha256": "6fe061734f7a1815ef72ee6a39cf3c087b1e07047c548a46ab61075429a6bdac",
+  "development_costs_sha256": "5caee4db22402ceac3c6f86eee3403c255ddcddce05b67683c0200022053a852"
+}

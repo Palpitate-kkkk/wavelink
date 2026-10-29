@@ -158,3 +158,17 @@ python -m experiments.robustness_ber --output results/robustness --plot
 [设计、分层 SE、结果和限制](docs/robustness.md) · [相位分配](reports/robustness/schedules.csv) · [汇总与配对结果](reports/robustness/summary.csv)
 
 51 项测试、224/224 NMSE 检查及 32/32 Oracle BER 检查通过，并核对一段完整旧链路的保存结果。随机相位平均下，小窗口更快恢复但后期波动较大；周期更新以较少重建次数获得接近逐帧大窗口的 late 数值。尚未证明任意相位或真实移动信道中的优势。
+
+## 开发流锁定阈值的观测触发更新（已验证）
+
+```bash
+python -m experiments.triggered_ber --output results/triggered --plot
+```
+
+用近期导频估计的噪声/PDP 偏差触发重建，缓存每帧矩统计，单独记录监测成本。阈值在 8 个开发种子的六场景、两档信噪比中选择并保存，再用 32 个独立测试种子覆盖全相位，不按测试结果调参。
+
+![Development-locked trigger](reports/triggered/triggered_6.svg)
+
+[触发公式、选择规则、精度代价与成本](docs/triggered.md) · [冻结参数](reports/triggered/selection.json) · [测试结果](reports/triggered/summary.csv) · [误触发与延迟](reports/triggered/detection.csv)
+
+阈值锁定为 0.75；57 项测试通过，独立测试的 336/336 NMSE 和 48/48 Oracle BER 检查通过。12 个测试条件的 post_all 平均 NMSE 均在周期策略的 1.05 倍内。平均每段重建 2.26 次，周期策略为 9 次；部分条件下 BER/NMSE 有小幅代价，未证明统计非劣效或总体加速。静态误触发、监测开销与测试分布限制均已报告。
