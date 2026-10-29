@@ -228,3 +228,17 @@ python -m experiments.density_ber --output results/density --plot
 [公平比较、资源代价与反例](docs/density.md) · [汇总](reports/density/summary.csv) · [跨栅格配对](reports/density/paired.csv) · [矩阵秩和条件数](reports/density/geometry.csv)
 
 94 项测试、560/560 NMSE 残差检查和 224/224 Oracle BER 检查通过。固定 Eb/N0=18 dB、持续延迟 15 场景，相同恢复器的共同 BER 从 0.029317 降至 0.021390，但名义判对原始比特率从 0.870587 降至 0.587166 Mbit/s。正常场景 BER 反而升高；更密导频没有缩短冻结规则的 72..79 帧解除等待，完整时延模型仍暴露弱变化触发不足。全部组合与失败结果保留。
+
+## 弱路径的创新残差触发（已验证）
+
+```bash
+python -m experiments.innovation_ber --output results/innovation --plot
+```
+
+在同一 28 导频完整时延模型上，以当前协方差对导频均值的正则化残差补充旧 PDP 变化触发；两者共用冷却期，拟合窗口和导频资源保持不变。新阈值由独立开发流选择并在测试前锁定为 2。
+
+![Pilot innovation trigger](reports/innovation/innovation.svg)
+
+[公式、开发规则与收益边界](docs/innovation.md) · [参数锁](reports/innovation/selection.json) · [测试结果](reports/innovation/summary.csv) · [有效更新响应](reports/innovation/responses.csv)
+
+105 项测试、360/360 NMSE 残差检查和 72/72 Oracle BER 检查通过。弱延迟 15、18 dB 的 BER 从旧完整模型的 0.031494 降至 0.013849；32 段测试链路均在变化后 1..9 帧内首次重建。静态与仅噪声变化场景输出不变，但低 SNR 弱路径下仍未胜过周期更新，部分路径恢复场景也不及原回退策略。额外缓存、检查和矩阵求解成本完整记录。
