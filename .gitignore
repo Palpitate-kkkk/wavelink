@@ -20,3 +20,5 @@ reports/multipath/*.png
 reports/tapls/*.png
 
 reports/lmmse/*.png
+
+reports/learned/*.png

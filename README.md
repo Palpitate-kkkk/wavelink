@@ -116,3 +116,17 @@ python -m experiments.lmmse_ber --output results/lmmse --plot
 [模型、理论校验与实际结果](docs/lmmse.md) · [汇总数据](reports/lmmse/summary.csv) · [信号/噪声误差分解](reports/lmmse/predictions.csv)
 
 33 项测试、112/112 估计器 NMSE 检查和 16/16 Oracle BER 检查通过。统计信息匹配可以改善均方误差，但错误 PDP 或噪声假设可使 LMMSE 劣于 LS。准确 PDP 是直接提供的理想统计基线，尚未从接收数据估计；本阶段随机信道与前阶段固定信道的 BER 不直接比较。
+
+## 从导频学习统计信息（已验证）
+
+```bash
+python -m experiments.learned_ber --output results/learned --plot
+```
+
+用独立校准帧的导频差分估计噪声，使用抽头 LS 功率减去噪声贡献估计 PDP，再固定 LMMSE 在独立测试帧上评测。比较 4/16/64 帧校准预算，保留理想统计基线和部分先验消融。
+
+![Pilot-only calibration](reports/learned/learned.svg)
+
+[估计公式、隔离方式、开销与边界](docs/learned.md) · [测试结果](reports/learned/summary.csv) · [校准诊断](reports/learned/calibration.csv)
+
+39 项测试、144/144 条件 NMSE 检查和 48/48 Oracle BER 检查通过。学习接口不接收真实 PDP 或噪声功率；仍需已知时延上界、帧内静态及校准/测试同分布。两层标准误分别反映给定模型后的测试波动和独立校准/测试重复的波动；目前只有 3 次独立校准重复，尚未验证统计漂移。

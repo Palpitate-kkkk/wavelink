@@ -1,0 +1,87 @@
+{
+  "config": {
+    "sample_rate_hz": 1000000,
+    "cp_len": 16,
+    "pilot_spacings": [
+      2,
+      4
+    ],
+    "ebn0_db": [
+      0,
+      6,
+      12,
+      18
+    ],
+    "seeds": [
+      51001,
+      51002,
+      51003
+    ],
+    "frames_per_seed": 120,
+    "symbols_per_frame": 20,
+    "channels": [
+      {
+        "name": "sparse",
+        "powers": [
+          0.8,
+          0,
+          0,
+          0,
+          0.12,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.08
+        ]
+      },
+      {
+        "name": "exponential",
+        "decay_samples": 3.0,
+        "length": 13
+      }
+    ],
+    "assumed_length": 13,
+    "calibration_frames": [
+      4,
+      16,
+      64
+    ]
+  },
+  "command": [
+    "python",
+    "-m",
+    "experiments.learned_ber",
+    "--output",
+    "reports/learned",
+    "--plot"
+  ],
+  "output_directory": "reports/learned",
+  "metric": "Ensemble E||Hhat-H||^2/E||H||^2, expected true channel power one; no framewise division",
+  "python": "3.13.5",
+  "numpy": "2.4.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "base_commit": "c983c50975ef629f6e42409bca5241eebc5a6217",
+  "working_tree_dirty": true,
+  "source_sha256": {
+    "src/wavelink/__init__.py": "0bd32de7372feb936af66d6096dc2081a95b271fa0210c0a3c09dc61fa929474",
+    "src/wavelink/baseband.py": "8f59ed824e9c1a870209e980bbd910a7c4d39c7a82392abbe99d3edabd7baa59",
+    "src/wavelink/channel.py": "18593324a0aee7a4dfc7c6ee093241a5cfb0493da87665b08793100b4474c0b9",
+    "src/wavelink/estimation.py": "d817eda2eab2c1c096e927981bc25c7085d27d64440adb415b47b59d72fc7e5b",
+    "src/wavelink/receiver.py": "bd6ab319264b327036b2adb200ad4cf2ec08674006eb0f9644266200c181ae44",
+    "src/wavelink/statistics.py": "eb840a7f094f6e762761ae69d0252883530aa5103ac03da5987ac63558c597a0",
+    "experiments/learned_ber.py": "7d54e69f61a10a4386c1408f8710ef7c0d1f34efa38a7733d557a5cff88b6541",
+    "experiments/lmmse_ber.py": "a62d6266bb9de08d727f75909df1d09f5b74d0dd26171f36e4994d810504d464",
+    "experiments/multipath_ber.py": "297cd29d0bd1aea5e7af7fa1bfb9356742400a546d3809d9cecedc0887bacf3f",
+    "experiments/learned.json": "de0c7812bc8889f8b268474bd9e211b511cfe027c5638c0c61e0c550f583feb0"
+  },
+  "split": "SeedSequence [seed,channel_index,spacing,snr_index,role]: role 1 calibration; role 2 test; nested calibration prefixes",
+  "priors": "Known contiguous delay bound L=13; block-static channel; zero-mean independent taps; unit-modulus known pilots",
+  "calibration": "Noise from disjoint within-frame pilot differences; PDP from mean-pilot tap LS with estimated noise subtraction and 1e-12 floor; no true-power normalization",
+  "uncertainty": "Frame SE conditional on each fitted model; independent calibration/test replicate SE separately reported; only 3 calibration repetitions",
+  "energy": "Total expected transmitted Eb includes pilots/CP; calibration budget separate from scored test bits; no throughput claim",
+  "stopping_rule": "Fixed train/test budgets, seeds and numerical floors; no test-based model selection"
+}
