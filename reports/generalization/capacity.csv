@@ -1,0 +1,5 @@
+state,assumed_length,true_max_delay,oracle_data_subspace_nmse_floor
+initial,13,12,1.0373835029841887e-30
+seen_final,13,12,1.644051799377284e-30
+new_paths,13,12,1.669510661571507e-30
+outside_support,13,15,0.4577088647702203

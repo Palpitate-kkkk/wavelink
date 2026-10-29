@@ -40,8 +40,15 @@ def stream_rng(seed,snr_index,role):
     return np.random.default_rng(np.random.SeedSequence([seed,snr_index,role]))
 
 
-def episode(cfg, scenario, db, seed, snr_index, trajectory=None):
+def episode(cfg, scenario, db, seed, snr_index, trajectory=None, statistics=None):
     initial,changed=validate(cfg)
+    if trajectory is not None and statistics is not None:raise ValueError('choose scalar trajectory or explicit statistics, not both')
+    if statistics is not None:
+        if any(np.iscomplexobj(x) for x in statistics):raise ValueError('statistics must be real powers')
+        power_grid,noise_factors=(np.asarray(x,float) for x in statistics)
+        if power_grid.ndim!=2 or power_grid.shape[0]!=cfg['episode_frames'] or not 1<=power_grid.shape[1]<=min(64,cfg['cp_len']+1):raise ValueError('explicit PDP shape or CP mismatch')
+        if not np.all(np.isfinite(power_grid)) or np.any(power_grid<0) or not np.allclose(power_grid.sum(axis=1),1,rtol=0,atol=1e-12):raise ValueError('finite nonnegative unit-power PDP rows required')
+        if noise_factors.shape!=(cfg['episode_frames'],) or not np.all(np.isfinite(noise_factors)) or np.any(noise_factors<=0):raise ValueError('positive per-frame noise factors required')
     if trajectory is not None:
         trajectory=np.asarray(trajectory,float)
         if trajectory.shape!=(cfg['episode_frames'],) or not np.all(np.isfinite(trajectory)) or np.any((trajectory<0)|(trajectory>1)):
@@ -65,6 +72,7 @@ def episode(cfg, scenario, db, seed, snr_index, trajectory=None):
     events=[]
     checkpoints={0,31,63,cfg['switch_after_frames']-1,cfg['switch_after_frames'],127,159,cfg['episode_frames']-2}
     maximum_lead=-1
+    matched_cache={}
     for t in range(cfg['episode_frames']):
         post=t>=cfg['switch_after_frames']
         powers=post_powers if post else initial;noise=post_noise if post else base_noise
@@ -79,6 +87,11 @@ def episode(cfg, scenario, db, seed, snr_index, trajectory=None):
                 powers=(1-alpha)*initial+alpha*post_powers
                 noise=base_noise*((1-alpha)+alpha*scenario['noise_factor'])
                 matched=TapDomainLMMSE(layout,powers,noise)
+        if statistics is not None:
+            powers=power_grid[t];noise=base_noise*noise_factors[t]
+            key=(powers.tobytes(),float(noise))
+            if key not in matched_cache:matched_cache[key]=TapDomainLMMSE(layout,powers,noise)
+            matched=matched_cache[key]
         y,p,bits,truth=simulate_frame(rng,powers,noise,layout,cfg['cp_len'],cfg['symbols_per_frame'])
         # Snapshot mappings BEFORE scoring or ingesting any current-frame pilots.
         mappings={'matched':matched.mapping,'ls_linear':linear,'tap_ls':tap.mapping,**{k:v.model.mapping for k,v in trackers.items()}}
@@ -101,7 +114,7 @@ def episode(cfg, scenario, db, seed, snr_index, trajectory=None):
                 if updated and (t in checkpoints or hasattr(tracker,'trigger_log')):
                     fit=tracker.statistics
                     events.append(dict(receiver=name,after_frame=t,applies_from_frame=t+1,noise_ratio=fit.noise_variance/noise,
-                        pdp_l1_error=float(np.sum(abs(fit.powers-powers))),updates=tracker.update_count))
+                        pdp_l1_error=float(np.sum(abs(np.pad(fit.powers,(0,max(0,len(powers)-len(fit.powers))))-np.pad(powers,(0,max(0,len(fit.powers)-len(powers))))))),updates=tracker.update_count))
                     if hasattr(tracker,'trigger_log'):events[-1].update(tracker.trigger_log[-1])
     costs=[dict(receiver=name,updates=v.update_count,fit_frame_visits=v.fit_frame_visits,
                 initial_fit_ms=v.initial_fit_ns/1e6,total_update_ms=v.update_ns/1e6,

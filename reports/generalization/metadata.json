@@ -1,0 +1,294 @@
+{
+  "config": {
+    "sample_rate_hz": 1000000,
+    "cp_len": 16,
+    "pilot_spacing": 4,
+    "ebn0_db": [
+      6,
+      18
+    ],
+    "onset_min": 64,
+    "phase_cycle": 32,
+    "calibration_frames": 64,
+    "symbols_per_frame": 20,
+    "assumed_length": 13,
+    "trace_bin_frames": 8,
+    "pre_frames": 32,
+    "early_frames": 64,
+    "late_frames": 64,
+    "episode_frames": 448,
+    "late_start_offset": 288,
+    "post_frames": 352,
+    "seeds": [
+      111001,
+      111002,
+      111003,
+      111004,
+      111005,
+      111006,
+      111007,
+      111008,
+      111009,
+      111010,
+      111011,
+      111012,
+      111013,
+      111014,
+      111015,
+      111016,
+      111017,
+      111018,
+      111019,
+      111020,
+      111021,
+      111022,
+      111023,
+      111024,
+      111025,
+      111026,
+      111027,
+      111028,
+      111029,
+      111030,
+      111031,
+      111032
+    ],
+    "schedule_seed": 112001,
+    "source_selection": "reports/triggered/selection.json",
+    "source_selection_sha256": "d59da7e463139d88edb7083b2466694b5ab1c1942ab22226714a922808e43ee5",
+    "source_protocol": "experiments/triggered.json",
+    "states": {
+      "initial": [
+        0.8,
+        0,
+        0,
+        0,
+        0.12,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0.08,
+        0,
+        0,
+        0
+      ],
+      "seen_final": [
+        0.1,
+        0,
+        0,
+        0,
+        0.2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0.7,
+        0,
+        0,
+        0
+      ],
+      "new_paths": [
+        0.1,
+        0.0,
+        0.2,
+        0.0,
+        0.0,
+        0.0,
+        0.4,
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.0,
+        0.1,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "outside_support": [
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.7
+      ]
+    },
+    "scenarios": [
+      {
+        "name": "mild_noise",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "initial",
+            "noise_factor": 1.5
+          }
+        ]
+      },
+      {
+        "name": "noise_drop",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "initial",
+            "noise_factor": 0.25
+          }
+        ]
+      },
+      {
+        "name": "new_paths",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "new_paths",
+            "noise_factor": 1.0
+          }
+        ]
+      },
+      {
+        "name": "outside_support",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "outside_support",
+            "noise_factor": 1.0
+          }
+        ]
+      },
+      {
+        "name": "repeat96",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "seen_final",
+            "noise_factor": 4.0
+          },
+          {
+            "offset": 96,
+            "state": "initial",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 192,
+            "state": "seen_final",
+            "noise_factor": 4.0
+          }
+        ]
+      },
+      {
+        "name": "repeat24",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "seen_final",
+            "noise_factor": 4.0
+          },
+          {
+            "offset": 24,
+            "state": "initial",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 48,
+            "state": "seen_final",
+            "noise_factor": 4.0
+          },
+          {
+            "offset": 72,
+            "state": "initial",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 96,
+            "state": "seen_final",
+            "noise_factor": 4.0
+          },
+          {
+            "offset": 120,
+            "state": "initial",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 144,
+            "state": "seen_final",
+            "noise_factor": 4.0
+          },
+          {
+            "offset": 168,
+            "state": "initial",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 192,
+            "state": "seen_final",
+            "noise_factor": 4.0
+          }
+        ]
+      }
+    ]
+  },
+  "command": [
+    "python",
+    "-m",
+    "experiments.generalization_ber",
+    "--output",
+    "reports/generalization",
+    "--plot"
+  ],
+  "output_directory": "reports/generalization",
+  "finished_at_utc": "2026-10-29T05:13:58.775246+00:00",
+  "python": "3.13.5",
+  "numpy": "2.4.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "base_commit": "97376f5a7566b95f27d349263c03512c8bf6d964",
+  "working_tree_dirty": true,
+  "source_sha256": {
+    "src/wavelink/__init__.py": "0bd32de7372feb936af66d6096dc2081a95b271fa0210c0a3c09dc61fa929474",
+    "src/wavelink/baseband.py": "8f59ed824e9c1a870209e980bbd910a7c4d39c7a82392abbe99d3edabd7baa59",
+    "src/wavelink/channel.py": "18593324a0aee7a4dfc7c6ee093241a5cfb0493da87665b08793100b4474c0b9",
+    "src/wavelink/estimation.py": "d817eda2eab2c1c096e927981bc25c7085d27d64440adb415b47b59d72fc7e5b",
+    "src/wavelink/receiver.py": "bd6ab319264b327036b2adb200ad4cf2ec08674006eb0f9644266200c181ae44",
+    "src/wavelink/statistics.py": "eb840a7f094f6e762761ae69d0252883530aa5103ac03da5987ac63558c597a0",
+    "src/wavelink/tracking.py": "2c7b771080dd9dab45c7043f3a726003c0fcbb6d4295d4e25c5376b8a5681476",
+    "experiments/generalization_ber.py": "f8bd3106a75ef921a8d8afd88d2ae580b22fb10a4283017de5c28e878c833feb",
+    "experiments/drift_ber.py": "348844d7c216445332746ecb9dc36475b1b6f96a405bf9f67168e3e535814fcc",
+    "experiments/robustness_ber.py": "e6cf337a4bb48e900bf479511578edef8345c00d829c7dd91379540041ce2c8d",
+    "experiments/triggered_ber.py": "7908281a6652bcebbbd683cca370ef52bf21422c1db1c8c33c04e6f2a2948ed8",
+    "experiments/learned_ber.py": "7d54e69f61a10a4386c1408f8710ef7c0d1f34efa38a7733d557a5cff88b6541",
+    "experiments/lmmse_ber.py": "a62d6266bb9de08d727f75909df1d09f5b74d0dd26171f36e4994d810504d464",
+    "experiments/multipath_ber.py": "297cd29d0bd1aea5e7af7fa1bfb9356742400a546d3809d9cecedc0887bacf3f",
+    "experiments/generalization.json": "9cbb7e33b753805ae1bb9bc44e4412831bb55568f191ef73a0210356c921630a"
+  },
+  "frozen_selection_sha256": "d59da7e463139d88edb7083b2466694b5ab1c1942ab22226714a922808e43ee5",
+  "frozen_threshold": 0.75,
+  "frozen_parameters": {
+    "window": 64,
+    "monitor_window": 16,
+    "check_every": 8,
+    "cooldown": 32
+  },
+  "split": "New channel/noise seeds disjoint from prior development/test; policies and all receiver sources verified against original selection",
+  "channel": "All scored frames use 16-length true PDP arrays, padded consistently across scenarios; CP=16 covers delay 15; assumed L remains 13",
+  "randomness": "SeedSequence role streams reused across scenarios with equal true-array lengths; per-frame fades independent, statistics piecewise constant",
+  "uncertainty": "Episode SE conditional on balanced phase assignment; repeated changes and overlapping windows are not independent replicates",
+  "detection": "Each update must take effect before the next change to count for a segment; periodic times reconstructed from fixed schedule and checked against counts",
+  "reference": "1.05 mean-NMSE ratio reused descriptively on post_all=352 frames; no claim of original 224-frame constraint certification",
+  "stopping_rule": "Frozen threshold and implementation, predeclared unseen shifts; failures retained without retuning"
+}

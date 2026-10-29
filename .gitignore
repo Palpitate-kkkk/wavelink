@@ -28,3 +28,5 @@ reports/drift/*.png
 reports/robustness/*.png
 
 reports/triggered/*.png
+
+reports/generalization/*.png

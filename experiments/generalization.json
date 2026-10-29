@@ -1,0 +1,245 @@
+{
+  "sample_rate_hz": 1000000,
+  "cp_len": 16,
+  "pilot_spacing": 4,
+  "ebn0_db": [
+    6,
+    18
+  ],
+  "onset_min": 64,
+  "phase_cycle": 32,
+  "calibration_frames": 64,
+  "symbols_per_frame": 20,
+  "assumed_length": 13,
+  "trace_bin_frames": 8,
+  "pre_frames": 32,
+  "early_frames": 64,
+  "late_frames": 64,
+  "episode_frames": 448,
+  "late_start_offset": 288,
+  "post_frames": 352,
+  "seeds": [
+    111001,
+    111002,
+    111003,
+    111004,
+    111005,
+    111006,
+    111007,
+    111008,
+    111009,
+    111010,
+    111011,
+    111012,
+    111013,
+    111014,
+    111015,
+    111016,
+    111017,
+    111018,
+    111019,
+    111020,
+    111021,
+    111022,
+    111023,
+    111024,
+    111025,
+    111026,
+    111027,
+    111028,
+    111029,
+    111030,
+    111031,
+    111032
+  ],
+  "schedule_seed": 112001,
+  "source_selection": "reports/triggered/selection.json",
+  "source_selection_sha256": "d59da7e463139d88edb7083b2466694b5ab1c1942ab22226714a922808e43ee5",
+  "source_protocol": "experiments/triggered.json",
+  "states": {
+    "initial": [
+      0.8,
+      0,
+      0,
+      0,
+      0.12,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.08,
+      0,
+      0,
+      0
+    ],
+    "seen_final": [
+      0.1,
+      0,
+      0,
+      0,
+      0.2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0,
+      0,
+      0
+    ],
+    "new_paths": [
+      0.1,
+      0.0,
+      0.2,
+      0.0,
+      0.0,
+      0.0,
+      0.4,
+      0.0,
+      0.0,
+      0.0,
+      0.2,
+      0.0,
+      0.1,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "outside_support": [
+      0.1,
+      0.0,
+      0.0,
+      0.0,
+      0.2,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.7
+    ]
+  },
+  "scenarios": [
+    {
+      "name": "mild_noise",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "initial",
+          "noise_factor": 1.5
+        }
+      ]
+    },
+    {
+      "name": "noise_drop",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "initial",
+          "noise_factor": 0.25
+        }
+      ]
+    },
+    {
+      "name": "new_paths",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "new_paths",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "outside_support",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "outside_support",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "repeat96",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "seen_final",
+          "noise_factor": 4.0
+        },
+        {
+          "offset": 96,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 192,
+          "state": "seen_final",
+          "noise_factor": 4.0
+        }
+      ]
+    },
+    {
+      "name": "repeat24",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "seen_final",
+          "noise_factor": 4.0
+        },
+        {
+          "offset": 24,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 48,
+          "state": "seen_final",
+          "noise_factor": 4.0
+        },
+        {
+          "offset": 72,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 96,
+          "state": "seen_final",
+          "noise_factor": 4.0
+        },
+        {
+          "offset": 120,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 144,
+          "state": "seen_final",
+          "noise_factor": 4.0
+        },
+        {
+          "offset": 168,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 192,
+          "state": "seen_final",
+          "noise_factor": 4.0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+scenario,ebn0_db,nmse_ratio,observed_mean_within_reference
+mild_noise,6,1.0083466443791138,True
+mild_noise,18,1.0003643180910118,True
+noise_drop,6,1.01251905066228,True
+noise_drop,18,1.0003669540523,True
+new_paths,6,0.893342766373178,True
+new_paths,18,0.7396263160011981,True
+outside_support,6,1.0019321233937237,True
+outside_support,18,1.0002415970431262,True
+repeat96,6,0.9831554431350598,True
+repeat96,18,0.9973166525809147,True
+repeat24,6,1.0151212823634388,True
+repeat24,18,1.0008278382713005,True

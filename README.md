@@ -172,3 +172,17 @@ python -m experiments.triggered_ber --output results/triggered --plot
 [触发公式、选择规则、精度代价与成本](docs/triggered.md) · [冻结参数](reports/triggered/selection.json) · [测试结果](reports/triggered/summary.csv) · [误触发与延迟](reports/triggered/detection.csv)
 
 阈值锁定为 0.75；57 项测试通过，独立测试的 336/336 NMSE 和 48/48 Oracle BER 检查通过。12 个测试条件的 post_all 平均 NMSE 均在周期策略的 1.05 倍内。平均每段重建 2.26 次，周期策略为 9 次；部分条件下 BER/NMSE 有小幅代价，未证明统计非劣效或总体加速。静态误触发、监测开销与测试分布限制均已报告。
+
+## 冻结策略的未见分布审计（已验证）
+
+```bash
+python -m experiments.generalization_ber --output results/generalization --plot
+```
+
+保持阈值 0.75 和整个接收机源码不变，用新种子审计噪声幅度改变、上界内/外新路径、96/24 帧重复漂移。增加时延子空间理论下界，并按每次变化的可用区间统计有效更新。
+
+![Frozen-policy unseen shifts](reports/generalization/generalization_18.svg)
+
+[未见分布、绝对精度与失败边界](docs/generalization.md) · [结果](reports/generalization/summary.csv) · [逐次变化响应](reports/generalization/detection.csv) · [子空间下界](reports/generalization/capacity.csv)
+
+64 项测试、336/336 NMSE 检查、48/48 Oracle BER 检查通过。12 个相对周期策略的均值参考项均通过，但延迟 15 超出 L=13 上界时，两者 BER 都很高；24 帧快速漂移也暴露有效更新缺失。相对基线接近不能替代绝对精度检查，失败样本与定义已完整保存。
