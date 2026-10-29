@@ -1,0 +1,321 @@
+{
+  "sample_rate_hz": 1000000,
+  "cp_len": 16,
+  "pilot_spacing": 4,
+  "ebn0_db": [
+    6,
+    18
+  ],
+  "calibration_frames": 64,
+  "symbols_per_frame": 20,
+  "assumed_length": 13,
+  "episode_frames": 320,
+  "post_frames": 224,
+  "guard": {
+    "monitor_window": 16,
+    "check_every": 8,
+    "refresh_every": 32,
+    "fallback_power": 1.0
+  },
+  "states": {
+    "initial": [
+      0.8,
+      0,
+      0,
+      0,
+      0.12,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.08,
+      0,
+      0,
+      0,
+      0
+    ],
+    "new_paths": [
+      0.1,
+      0.0,
+      0.2,
+      0.0,
+      0.0,
+      0.0,
+      0.4,
+      0.0,
+      0.0,
+      0.0,
+      0.2,
+      0.0,
+      0.1,
+      0.0,
+      0.0,
+      0.0,
+      0
+    ],
+    "delay13": [
+      0.1,
+      0.0,
+      0.0,
+      0.0,
+      0.2,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.7,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "delay15": [
+      0.1,
+      0.0,
+      0.0,
+      0.0,
+      0.2,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.7,
+      0.0
+    ],
+    "delay16": [
+      0.1,
+      0.0,
+      0.0,
+      0.0,
+      0.2,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.7
+    ],
+    "weak15": [
+      0.75,
+      0.0,
+      0.0,
+      0.0,
+      0.2,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.05,
+      0.0
+    ]
+  },
+  "scenarios": [
+    {
+      "name": "stationary",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "initial",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "persistent15",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "delay15",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "weak15",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "weak15",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "return15",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 64,
+          "state": "initial",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "return_new",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 64,
+          "state": "new_paths",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "repeat64",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 64,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 128,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 192,
+          "state": "initial",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "repeat24",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 24,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 48,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 72,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 96,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 120,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 144,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 168,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 192,
+          "state": "delay15",
+          "noise_factor": 1.0
+        }
+      ]
+    }
+  ],
+  "release_checks": 8,
+  "exit_threshold": 1.5,
+  "entry_threshold": 4.0,
+  "baseline_metadata": "reports/recovery/metadata.json",
+  "baseline_metadata_sha256": "16a1a30d79112e35031e5b61357b975b0ff71aad7856e76fe6d9842eaf9fa4a1",
+  "seeds": [
+    161001,
+    161002,
+    161003,
+    161004,
+    161005,
+    161006,
+    161007,
+    161008,
+    161009,
+    161010,
+    161011,
+    161012,
+    161013,
+    161014,
+    161015,
+    161016,
+    161017,
+    161018,
+    161019,
+    161020,
+    161021,
+    161022,
+    161023,
+    161024,
+    161025,
+    161026,
+    161027,
+    161028,
+    161029,
+    161030,
+    161031,
+    161032
+  ],
+  "schedule_seed": 162001,
+  "pilot_spacings": [
+    4,
+    2
+  ],
+  "budgets": [
+    "fixed_eb",
+    "fixed_noise"
+  ]
+}

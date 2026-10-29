@@ -214,3 +214,17 @@ python -m experiments.recovery_ber --output results/recovery --plot
 [方法、恢复收益与等待代价](docs/recovery.md) · [参数锁](reports/recovery/selection.json) · [测试结果](reports/recovery/summary.csv) · [逐次响应](reports/recovery/responses.csv)
 
 85 项测试、512/512 NMSE 残差检查、64/64 Oracle BER 检查通过。在路径恢复、6 dB 场景，相对锁定版的 post_all BER 从 0.212828 降至 0.166847；post_late 从 0.223685 降至 0.101788。测试中未出现越界期间解除，代价是恢复需 72..79 帧；快速反复变化仍未解除，不能推广为所有变化速度下的改善。
+
+## 导频密度与能量预算审计（已验证）
+
+```bash
+python -m experiments.density_ber --output results/density --plot
+```
+
+比较 16/28 导频，分开固定每数据比特 Eb/N0 和固定噪声预算；共享完整发送波形、信道与标准噪声，额外在共同数据子载波计分。密集栅格可以辨识 17 抽头，但每符号数据容量从 72 降到 48 比特。
+
+![Pilot density and resource tradeoffs](reports/density/density.svg)
+
+[公平比较、资源代价与反例](docs/density.md) · [汇总](reports/density/summary.csv) · [跨栅格配对](reports/density/paired.csv) · [矩阵秩和条件数](reports/density/geometry.csv)
+
+94 项测试、560/560 NMSE 残差检查和 224/224 Oracle BER 检查通过。固定 Eb/N0=18 dB、持续延迟 15 场景，相同恢复器的共同 BER 从 0.029317 降至 0.021390，但名义判对原始比特率从 0.870587 降至 0.587166 Mbit/s。正常场景 BER 反而升高；更密导频没有缩短冻结规则的 72..79 帧解除等待，完整时延模型仍暴露弱变化触发不足。全部组合与失败结果保留。

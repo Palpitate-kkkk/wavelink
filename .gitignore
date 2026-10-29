@@ -34,3 +34,5 @@ reports/generalization/*.png
 reports/guard/*.png
 
 reports/recovery/*.png
+
+reports/density/*.png
