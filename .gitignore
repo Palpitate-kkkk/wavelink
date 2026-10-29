@@ -16,3 +16,5 @@ data/
 reports/awgn/*.png
 
 reports/multipath/*.png
+
+reports/tapls/*.png

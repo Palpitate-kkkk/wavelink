@@ -10,6 +10,7 @@ from pathlib import Path
 import numpy as np
 from wavelink import qpsk_modulate, qpsk_demodulate, ofdm_modulate, ofdm_demodulate
 from wavelink.channel import add_awgn
+from wavelink.estimation import TapDomainLS
 from wavelink.receiver import comb_grid, apply_multipath, ls_channel_estimate, zero_force, pilot_noise_variance
 
 
@@ -41,13 +42,14 @@ def run(cfg):
             nd, npilot = len(layout.data_tones), len(layout.pilot_tones)
             bins = layout.bins(layout.data_tones)
             truth = np.fft.fft(taps, layout.n_fft)[bins]
+            tap_models = {f'tap_ls_L{length}': TapDomainLS(layout, length) for length in cfg.get('tap_lengths', [])}
             for cp in cfg['cp_lengths']:
                 for si, db in enumerate(cfg['ebn0_db']):
                     n0 = pilot_noise_variance(db, layout, cp)
                     oracle_theory = float(np.mean([.5*math.erfc(abs(h)/math.sqrt(2*n0)) for h in truth])) if cp >= len(taps)-1 else ''
                     for seed in cfg['seeds']:
                         rng = np.random.default_rng(np.random.SeedSequence([seed, ci, spacing, cp, si]))
-                        stats = {name: dict(errors=0, frame_ber_sum2=0., nmse_sum=0., nmse_sum2=0.) for name in ('none', 'oracle_zf', 'ls_linear_zf')}
+                        stats = {name: dict(errors=0, frame_ber_sum2=0., nmse_sum=0., nmse_sum2=0.) for name in ('none', 'oracle_zf', 'ls_linear_zf', *tap_models)}
                         for _ in range(cfg['frames_per_seed']):
                             # One independent warm-up symbol populates FIR history; not scored.
                             ns = cfg['symbols_per_frame']+1
@@ -63,9 +65,14 @@ def run(cfg):
                             estimate = ls_channel_estimate(received, pilots[1:], layout)
                             outputs = dict(none=yd, oracle_zf=zero_force(yd, truth), ls_linear_zf=zero_force(yd, estimate))
                             nmse = float(np.sum(abs(estimate-truth)**2)/(len(received)*np.sum(abs(truth)**2)))
+                            metrics = dict(ls_linear_zf=nmse, oracle_zf=0., none=None)
+                            for name, model in tap_models.items():
+                                fitted = model.estimate(received, pilots[1:])
+                                outputs[name] = zero_force(yd, fitted)
+                                metrics[name] = float(np.sum(abs(fitted-truth)**2)/(len(received)*np.sum(abs(truth)**2)))
                             for name, symbols in outputs.items():
                                 errors = int(np.count_nonzero(qpsk_demodulate(symbols.ravel()) != bits[1:].ravel()))
-                                metric = nmse if name == 'ls_linear_zf' else (0. if name == 'oracle_zf' else None)
+                                metric = metrics[name]
                                 s = stats[name]
                                 s['errors'] += errors
                                 s['frame_ber_sum2'] += (errors/bits[1:].size)**2

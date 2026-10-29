@@ -88,3 +88,17 @@ python experiments/multipath_ber.py --output results/multipath --plot
 [多径实验报告与边界](docs/multipath.md) · [结果](reports/multipath/summary.csv) · [无噪声诊断](reports/multipath/diagnostics.csv)
 
 已知 CSI 只作为参考；无噪声插值仍可能有偏差。该阶段为静态离散多径仿真，尚未验证移动信道、频偏或硬件接收。
+
+## 时域结构约束与长度失配（已验证）
+
+```bash
+python -m experiments.tapls_ber --output results/tapls --plot
+```
+
+采用部分 DFT 矩阵对导频观测做时域抽头 LS 拟合；比较长度 L=2/4/8/13 与线性插值。CP 固定为 16，避免把 CP 不足和长度先验错误混在一起。所有接收机共享样本，不依赖真实信道选取 L。
+
+![Tap-domain LS](reports/tapls/tapls.svg)
+
+[公式、先验边界与结果](docs/tapls.md) · [汇总数据](reports/tapls/summary.csv) · [矩阵条件数与噪声放大](reports/tapls/geometry.csv)
+
+27 项测试通过；64/64 偏差-方差一致性检查和 16/16 oracle BER 检查通过。时域约束并非总是更好：过短模型产生偏差，过长模型可能放大噪声。该实现是已有 LS 方法的可复现比较，不宣称新算法。
