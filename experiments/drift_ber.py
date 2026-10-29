@@ -40,7 +40,7 @@ def stream_rng(seed,snr_index,role):
     return np.random.default_rng(np.random.SeedSequence([seed,snr_index,role]))
 
 
-def episode(cfg, scenario, db, seed, snr_index, trajectory=None, statistics=None):
+def episode(cfg, scenario, db, seed, snr_index, trajectory=None, statistics=None, tracker_factory=None):
     initial,changed=validate(cfg)
     if trajectory is not None and statistics is not None:raise ValueError('choose scalar trajectory or explicit statistics, not both')
     if statistics is not None:
@@ -60,7 +60,8 @@ def episode(cfg, scenario, db, seed, snr_index, trajectory=None, statistics=None
     for _ in range(cfg['calibration_frames']):
         y,p,_,_=simulate_frame(rng,initial,base_noise,layout,cfg['cp_len'],cfg['symbols_per_frame'])
         calibration.append(y[:,layout.bins(layout.pilot_tones)]/p)
-    trackers={p['name']:make_tracker(p,np.asarray(calibration),layout,cfg['assumed_length']) for p in cfg['policies']}
+    factory=make_tracker if tracker_factory is None else tracker_factory
+    trackers={p['name']:factory(p,np.asarray(calibration),layout,cfg['assumed_length']) for p in cfg['policies']}
     tap=TapDomainLS(layout,cfg['assumed_length']);linear=linear_mapping(layout)
     names=('oracle_zf','matched','ls_linear','tap_ls',*trackers)
     metrics={name:[] for name in names}

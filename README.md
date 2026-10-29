@@ -50,7 +50,7 @@ docs/experiments.md 实验记录与公平比较约定
 
 1. **已完成**：AWGN 基线与理论 BER 对照，明确 SNR / Eb/N0 及开销定义。
 2. **已完成**：静态多径、导频、LS 信道估计与均衡；同步误差和补偿尚待实现。
-3. 信道统计失配下的算法对比、独立重复实验及失败边界。
+3. **已完成阶段验证**：信道统计失配对比、导频统计学习与因果跟踪、冻结分布审计和支撑失配告警；恢复后的模型选择仍待改进。
 4. 根据结果延伸到调制识别、SDR 回放/接收、无线边缘任务调度。
 
 详见 [路线图](docs/roadmap.md) 和 [实验规范](docs/experiments.md)。
@@ -186,3 +186,17 @@ python -m experiments.generalization_ber --output results/generalization --plot
 [未见分布、绝对精度与失败边界](docs/generalization.md) · [结果](reports/generalization/summary.csv) · [逐次变化响应](reports/generalization/detection.csv) · [子空间下界](reports/generalization/capacity.csv)
 
 64 项测试、336/336 NMSE 检查、48/48 Oracle BER 检查通过。12 个相对周期策略的均值参考项均通过，但延迟 15 超出 L=13 上界时，两者 BER 都很高；24 帧快速漂移也暴露有效更新缺失。相对基线接近不能替代绝对精度检查，失败样本与定义已完整保存。
+
+## 时延支撑告警与正则化回退（已验证，含失败边界）
+
+```bash
+python -m experiments.guard_ber --output results/guard --plot
+```
+
+用原导频时延子空间的正交残差监测失配，告警后从下一帧切换到覆盖 CP 范围的均匀先验 LMMSE。开发阈值先锁定，再用 32 个新种子覆盖全相位，检查正常状态、延迟 13/15/16 和路径恢复。
+
+![Pilot-subspace guard](reports/guard/guard.svg)
+
+[方法、开发失败与恢复代价](docs/guard.md) · [阈值锁定记录](reports/guard/selection.json) · [独立测试](reports/guard/summary.csv) · [告警诊断](reports/guard/detection.csv)
+
+75 项测试、392/392 NMSE 残差检查及 56/56 Oracle BER 检查通过。延迟 15、18 dB 的 BER 从 0.361202 降至 0.033640；支撑正确的三类测试场景未告警，输出与旧策略一致。开发条件没有全部通过，阈值 4 来自预定的失败兜底规则；路径恢复后的 6 dB 场景 BER 从 0.196584 升至 0.213851。保留全部数据，不把持续越界下的收益推广为所有状态下的提升。
