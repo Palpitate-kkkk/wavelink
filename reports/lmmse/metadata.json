@@ -1,0 +1,75 @@
+{
+  "config": {
+    "sample_rate_hz": 1000000,
+    "cp_len": 16,
+    "pilot_spacings": [
+      2,
+      4
+    ],
+    "ebn0_db": [
+      0,
+      6,
+      12,
+      18
+    ],
+    "seeds": [
+      41001,
+      41002,
+      41003
+    ],
+    "frames_per_seed": 120,
+    "symbols_per_frame": 20,
+    "channels": [
+      {
+        "name": "sparse",
+        "powers": [
+          0.8,
+          0,
+          0,
+          0,
+          0.12,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.08
+        ]
+      },
+      {
+        "name": "exponential",
+        "decay_samples": 3.0,
+        "length": 13
+      }
+    ],
+    "assumed_length": 13,
+    "noise_factors": [
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "python": "3.13.5",
+  "numpy": "2.4.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "base_commit": "a222b7f07786475611a059c8f40360150582ee67",
+  "working_tree_dirty": true,
+  "source_sha256": {
+    "src/wavelink/__init__.py": "0bd32de7372feb936af66d6096dc2081a95b271fa0210c0a3c09dc61fa929474",
+    "src/wavelink/baseband.py": "8f59ed824e9c1a870209e980bbd910a7c4d39c7a82392abbe99d3edabd7baa59",
+    "src/wavelink/channel.py": "18593324a0aee7a4dfc7c6ee093241a5cfb0493da87665b08793100b4474c0b9",
+    "src/wavelink/estimation.py": "d817eda2eab2c1c096e927981bc25c7085d27d64440adb415b47b59d72fc7e5b",
+    "src/wavelink/receiver.py": "bd6ab319264b327036b2adb200ad4cf2ec08674006eb0f9644266200c181ae44",
+    "experiments/lmmse_ber.py": "a62d6266bb9de08d727f75909df1d09f5b74d0dd26171f36e4994d810504d464",
+    "experiments/multipath_ber.py": "297cd29d0bd1aea5e7af7fa1bfb9356742400a546d3809d9cecedc0887bacf3f",
+    "experiments/lmmse.json": "956b24ed099d0d51a6bd833126e4746f93f1c2411fa55655beccacddbcfc6772"
+  },
+  "channel": "Independent CN(0,diag(PDP)) per frame; fixed within frame; no per-realization normalization",
+  "metric": "E||Hhat-H||^2 / E||H||^2; unit ensemble power; not mean of instantaneous NMSE ratios",
+  "priors": "Matched PDP supplied as ideal statistics baseline, not estimated; uniform/short PDP and noise factors explicit",
+  "uncertainty": "SE over independent fading frames; paired NMSE differences use shared frames; fixed six-SE regression tolerance",
+  "energy": "Expected transmitted Eb includes pilots and CP; no receive-power or instantaneous-SNR normalization",
+  "stopping_rule": "fixed frames, symbols and seeds; no early stopping or seed retuning"
+}

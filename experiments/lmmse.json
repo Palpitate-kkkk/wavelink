@@ -1,0 +1,15 @@
+{
+  "sample_rate_hz": 1000000,
+  "cp_len": 16,
+  "pilot_spacings": [2, 4],
+  "ebn0_db": [0, 6, 12, 18],
+  "seeds": [41001, 41002, 41003],
+  "frames_per_seed": 120,
+  "symbols_per_frame": 20,
+  "channels": [
+    {"name": "sparse", "powers": [0.80, 0, 0, 0, 0.12, 0, 0, 0, 0, 0, 0, 0, 0.08]},
+    {"name": "exponential", "decay_samples": 3.0, "length": 13}
+  ],
+  "assumed_length": 13,
+  "noise_factors": [0.1, 1.0, 10.0]
+}

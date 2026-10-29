@@ -61,3 +61,62 @@ class TapDomainLS:
         bias_nmse = float(np.sum(abs(bias)**2)/denom)
         variance_nmse = noise_variance*self.noise_gain/denom
         return bias_nmse, variance_nmse
+
+
+def _tap_powers(powers, n_fft):
+    raw = np.asarray(powers)
+    if np.iscomplexobj(raw):
+        raise ValueError('tap powers must be real')
+    p = np.asarray(raw, float)
+    if p.ndim != 1 or not 1 <= len(p) <= n_fft or not np.all(np.isfinite(p)) or np.any(p < 0) or p.sum() <= 0:
+        raise ValueError('finite nonnegative tap powers with positive total required')
+    return p
+
+
+class TapDomainLMMSE(TapDomainLS):
+    """Zero-mean, uncorrelated-tap LMMSE with explicit PDP and noise prior.
+
+    Powers are E|h[l]|^2, not normalized internally. Zero powers are allowed.
+    Positive noise regularizes even rank-deficient pilot geometries. This is
+    per-symbol frequency estimation; no averaging across OFDM symbols.
+    Inherits the unit-modulus pilot validation and data-tone output contract.
+    """
+    def __init__(self, layout, powers, noise_variance):
+        powers = _tap_powers(powers, layout.n_fft)
+        if not np.isfinite(noise_variance) or noise_variance <= 0:
+            raise ValueError('strictly positive assumed noise variance required')
+        self.layout, self.length = layout, len(powers)
+        self.powers = powers.copy()
+        self.noise_variance = float(noise_variance)
+        delays = np.arange(self.length)
+        self.pilot_design = np.exp(-2j*np.pi*np.outer(layout.pilot_tones, delays)/layout.n_fft)
+        self.data_design = np.exp(-2j*np.pi*np.outer(layout.data_tones, delays)/layout.n_fft)
+        cross = (self.data_design*powers) @ self.pilot_design.conj().T
+        covariance = (self.pilot_design*powers) @ self.pilot_design.conj().T
+        covariance += noise_variance*np.eye(len(layout.pilot_tones))
+        # Solve C X = R_pd, then take Hermitian transpose; no explicit inverse.
+        self.mapping = np.linalg.solve(covariance, cross.conj().T).conj().T
+        self.noise_gain = float(np.sum(abs(self.mapping)**2))
+
+
+def ensemble_nmse(mapping, layout, true_powers, true_noise_variance):
+    """Evaluator: ensemble E||A z-Hd||^2 / E||Hd||^2 under true PDP.
+
+    Independent zero-mean taps, sufficient CP and unit pilots are assumed.
+    Works for any fixed complex linear pilot-to-data mapping, including a
+    mismatched estimator. This is not E[per-realization normalized error].
+    """
+    p = _tap_powers(true_powers, layout.n_fft)
+    a = np.asarray(mapping, complex)
+    if a.shape != (len(layout.data_tones), len(layout.pilot_tones)) or not np.all(np.isfinite(a)):
+        raise ValueError('finite pilot-to-data matrix required')
+    if not np.isfinite(true_noise_variance) or true_noise_variance < 0:
+        raise ValueError('nonnegative true noise variance required')
+    delays = np.arange(len(p))
+    fp = np.exp(-2j*np.pi*np.outer(layout.pilot_tones,delays)/layout.n_fft)
+    fd = np.exp(-2j*np.pi*np.outer(layout.data_tones,delays)/layout.n_fft)
+    residual = a @ fp-fd
+    signal = float(np.sum(abs(residual)**2*p))
+    noise = float(true_noise_variance*np.sum(abs(a)**2))
+    denominator = len(layout.data_tones)*p.sum()
+    return signal/denominator, noise/denominator

@@ -4,7 +4,7 @@
 
 Reproducible wireless-link experiments for propagation-aware receiver design.
 
-**状态：开发初期 / 项目实践。** 已完成 QPSK/OFDM 基础模块、复基带 AWGN 与理论 BER 对照，含循环前缀能量约定、独立重复及置信区间；现已加入静态多径、梳状导频、保护子载波、LS 线性插值与 ZF 均衡。尚无研究性能提升结论，不包含硬件实测。
+**状态：开发初期 / 项目实践。** 已完成 QPSK/OFDM 基础模块、复基带 AWGN 与理论 BER 对照，含循环前缀能量约定、独立重复及置信区间；现已加入多径、梳状导频、保护子载波、LS/时域 LS/LMMSE 与 ZF 均衡，并完成长度、噪声与 PDP 失配的基线比较。当前结果限于指定仿真模型，不包含硬件实测。
 
 ## 研究问题
 
@@ -102,3 +102,17 @@ python -m experiments.tapls_ber --output results/tapls --plot
 [公式、先验边界与结果](docs/tapls.md) · [汇总数据](reports/tapls/summary.csv) · [矩阵条件数与噪声放大](reports/tapls/geometry.csv)
 
 27 项测试通过；64/64 偏差-方差一致性检查和 16/16 oracle BER 检查通过。时域约束并非总是更好：过短模型产生偏差，过长模型可能放大噪声。该实现是已有 LS 方法的可复现比较，不宣称新算法。
+
+## LMMSE 与统计信息失配（已验证）
+
+```bash
+python -m experiments.lmmse_ber --output results/lmmse --plot
+```
+
+在每帧独立的随机块衰落中，对比线性 LS、时域 LS、准确统计信息的 LMMSE，以及噪声功率低估/高估 10 倍、PDP 均匀化或错误缩短的 LMMSE。共享链路样本，报告期望之比的 ensemble NMSE、BER 和帧级/配对标准误。
+
+![LMMSE statistical mismatch](reports/lmmse/lmmse.svg)
+
+[模型、理论校验与实际结果](docs/lmmse.md) · [汇总数据](reports/lmmse/summary.csv) · [信号/噪声误差分解](reports/lmmse/predictions.csv)
+
+33 项测试、112/112 估计器 NMSE 检查和 16/16 Oracle BER 检查通过。统计信息匹配可以改善均方误差，但错误 PDP 或噪声假设可使 LMMSE 劣于 LS。准确 PDP 是直接提供的理想统计基线，尚未从接收数据估计；本阶段随机信道与前阶段固定信道的 BER 不直接比较。

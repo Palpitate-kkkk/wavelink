@@ -18,3 +18,5 @@ reports/awgn/*.png
 reports/multipath/*.png
 
 reports/tapls/*.png
+
+reports/lmmse/*.png
