@@ -1,0 +1,33 @@
+{
+  "sample_rate_hz": 1000000,
+  "cp_len": 16,
+  "pilot_spacing": 4,
+  "ebn0_db": [6, 18],
+  "seeds": [71001, 71002, 71003, 71004, 71005, 71006, 71007, 71008, 71009, 71010, 71011, 71012, 71013, 71014, 71015, 71016, 71017, 71018, 71019, 71020, 71021, 71022, 71023, 71024, 71025, 71026, 71027, 71028, 71029, 71030, 71031, 71032],
+  "schedule_seed": 72001,
+  "onset_min": 64,
+  "phase_cycle": 32,
+  "calibration_frames": 64,
+  "episode_frames": 320,
+  "symbols_per_frame": 20,
+  "assumed_length": 13,
+  "trace_bin_frames": 8,
+  "pre_frames": 32,
+  "early_frames": 64,
+  "late_start_offset": 160,
+  "late_frames": 64,
+  "initial_powers": [0.8, 0, 0, 0, 0.12, 0, 0, 0, 0, 0, 0, 0, 0.08],
+  "changed_powers": [0.1, 0, 0, 0, 0.2, 0, 0, 0, 0, 0, 0, 0, 0.7],
+  "scenarios": [
+    {"name": "stationary", "change_pdp": false, "noise_factor": 1.0, "ramp_frames": 0},
+    {"name": "step", "change_pdp": true, "noise_factor": 4.0, "ramp_frames": 0},
+    {"name": "ramp16", "change_pdp": true, "noise_factor": 4.0, "ramp_frames": 16},
+    {"name": "ramp64", "change_pdp": true, "noise_factor": 4.0, "ramp_frames": 64}
+  ],
+  "policies": [
+    {"name": "frozen", "window": 64, "update_every": null},
+    {"name": "periodic_64_32", "window": 64, "update_every": 32},
+    {"name": "rolling_16", "window": 16, "update_every": 1},
+    {"name": "rolling_64", "window": 64, "update_every": 1}
+  ]
+}

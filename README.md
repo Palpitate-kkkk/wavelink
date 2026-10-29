@@ -144,3 +144,17 @@ python -m experiments.drift_ber --output results/drift --plot
 [时序、准确性检查、结果与成本](docs/drift.md) · [汇总及链路级 SE](reports/drift/summary.csv) · [更新次数和因果审计](reports/drift/costs.csv)
 
 45 项测试、224/224 NMSE 残差检查和 32/32 Oracle BER 检查通过。每个配置做 12 次独立整段链路重复，不将重叠窗口或相关帧当成独立样本。小窗口恢复较快但可能增加稳定场景的误差，高信噪比下更新收益可能较小；实际噪声翻倍数会改变实际 Eb/N0，详见报告。
+
+## 随机变化相位与缓变统计（已验证）
+
+```bash
+python -m experiments.robustness_ber --output results/robustness --plot
+```
+
+将周期更新的 32 种变化相位随机排列，分别指派给 32 个独立信道/噪声种子；比较统计不变、阶跃、16/64 帧功率统计渐变。预先固定相对变化点的 early/late 窗口，记录相对冻结模型和相对周期更新的配对误差。
+
+![Random phase and gradual statistics](reports/robustness/robustness_6.svg)
+
+[设计、分层 SE、结果和限制](docs/robustness.md) · [相位分配](reports/robustness/schedules.csv) · [汇总与配对结果](reports/robustness/summary.csv)
+
+51 项测试、224/224 NMSE 检查及 32/32 Oracle BER 检查通过，并核对一段完整旧链路的保存结果。随机相位平均下，小窗口更快恢复但后期波动较大；周期更新以较少重建次数获得接近逐帧大窗口的 late 数值。尚未证明任意相位或真实移动信道中的优势。

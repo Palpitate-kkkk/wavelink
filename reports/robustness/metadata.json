@@ -1,0 +1,172 @@
+{
+  "config": {
+    "sample_rate_hz": 1000000,
+    "cp_len": 16,
+    "pilot_spacing": 4,
+    "ebn0_db": [
+      6,
+      18
+    ],
+    "seeds": [
+      71001,
+      71002,
+      71003,
+      71004,
+      71005,
+      71006,
+      71007,
+      71008,
+      71009,
+      71010,
+      71011,
+      71012,
+      71013,
+      71014,
+      71015,
+      71016,
+      71017,
+      71018,
+      71019,
+      71020,
+      71021,
+      71022,
+      71023,
+      71024,
+      71025,
+      71026,
+      71027,
+      71028,
+      71029,
+      71030,
+      71031,
+      71032
+    ],
+    "schedule_seed": 72001,
+    "onset_min": 64,
+    "phase_cycle": 32,
+    "calibration_frames": 64,
+    "episode_frames": 320,
+    "symbols_per_frame": 20,
+    "assumed_length": 13,
+    "trace_bin_frames": 8,
+    "pre_frames": 32,
+    "early_frames": 64,
+    "late_start_offset": 160,
+    "late_frames": 64,
+    "initial_powers": [
+      0.8,
+      0,
+      0,
+      0,
+      0.12,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.08
+    ],
+    "changed_powers": [
+      0.1,
+      0,
+      0,
+      0,
+      0.2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7
+    ],
+    "scenarios": [
+      {
+        "name": "stationary",
+        "change_pdp": false,
+        "noise_factor": 1.0,
+        "ramp_frames": 0
+      },
+      {
+        "name": "step",
+        "change_pdp": true,
+        "noise_factor": 4.0,
+        "ramp_frames": 0
+      },
+      {
+        "name": "ramp16",
+        "change_pdp": true,
+        "noise_factor": 4.0,
+        "ramp_frames": 16
+      },
+      {
+        "name": "ramp64",
+        "change_pdp": true,
+        "noise_factor": 4.0,
+        "ramp_frames": 64
+      }
+    ],
+    "policies": [
+      {
+        "name": "frozen",
+        "window": 64,
+        "update_every": null
+      },
+      {
+        "name": "periodic_64_32",
+        "window": 64,
+        "update_every": 32
+      },
+      {
+        "name": "rolling_16",
+        "window": 16,
+        "update_every": 1
+      },
+      {
+        "name": "rolling_64",
+        "window": 64,
+        "update_every": 1
+      }
+    ]
+  },
+  "command": [
+    "python",
+    "-m",
+    "experiments.robustness_ber",
+    "--output",
+    "reports/robustness",
+    "--plot"
+  ],
+  "output_directory": "reports/robustness",
+  "python": "3.13.5",
+  "numpy": "2.4.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "base_commit": "c968173517b297b3c6f2f8a78bfee3bf179dd0e1",
+  "working_tree_dirty": true,
+  "source_sha256": {
+    "src/wavelink/__init__.py": "0bd32de7372feb936af66d6096dc2081a95b271fa0210c0a3c09dc61fa929474",
+    "src/wavelink/baseband.py": "8f59ed824e9c1a870209e980bbd910a7c4d39c7a82392abbe99d3edabd7baa59",
+    "src/wavelink/channel.py": "18593324a0aee7a4dfc7c6ee093241a5cfb0493da87665b08793100b4474c0b9",
+    "src/wavelink/estimation.py": "d817eda2eab2c1c096e927981bc25c7085d27d64440adb415b47b59d72fc7e5b",
+    "src/wavelink/receiver.py": "bd6ab319264b327036b2adb200ad4cf2ec08674006eb0f9644266200c181ae44",
+    "src/wavelink/statistics.py": "eb840a7f094f6e762761ae69d0252883530aa5103ac03da5987ac63558c597a0",
+    "src/wavelink/tracking.py": "c2173bd59460d250e516376f9f50068e2d454d79be12cc9679101b1e5659bb14",
+    "experiments/robustness_ber.py": "e6cf337a4bb48e900bf479511578edef8345c00d829c7dd91379540041ce2c8d",
+    "experiments/drift_ber.py": "52c1f26d2304d41aa505f64c048ed0df3667bb63d638661892387b205064b8b4",
+    "experiments/learned_ber.py": "7d54e69f61a10a4386c1408f8710ef7c0d1f34efa38a7733d557a5cff88b6541",
+    "experiments/lmmse_ber.py": "a62d6266bb9de08d727f75909df1d09f5b74d0dd26171f36e4994d810504d464",
+    "experiments/multipath_ber.py": "297cd29d0bd1aea5e7af7fa1bfb9356742400a546d3809d9cecedc0887bacf3f",
+    "experiments/robustness.json": "ffc4d0fedcf966de36d43d4c8728d81a7048d2af850e09686d46a3be321082b0"
+  },
+  "schedule": "Random permutation of every phase 0..31 assigned once to 32 independent channel/noise seeds; same assignment across scenarios and SNRs",
+  "trajectory": "PDP and noise POWERS interpolate linearly by alpha=clip((t-start+1)/ramp,0,1); step uses t>=start; block static within each frame",
+  "uncertainty": "Independent episode errors conditional on fixed stratified schedule; SE is conservative stratified mean estimate, not an unconditional random-onset confidence interval",
+  "random_streams": "Channel/noise role streams inherited from drift episode; schedule seed independent; scenarios reuse latent draws",
+  "causality": "Trajectory and onset enter evaluator only; current frame scored before statistics update; no final unused update",
+  "energy": "Fixed transmitter Eb; true instantaneous ensemble Eb/N0 = initial dB - 10log10(1+3alpha) in changing cases",
+  "timing": "Inherited per-fit wall-time diagnostics; not a formal latency benchmark",
+  "stopping_rule": "Fixed stratified phases, ramps, horizons, seeds and policies; no result-driven selection"
+}

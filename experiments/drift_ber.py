@@ -40,8 +40,12 @@ def stream_rng(seed,snr_index,role):
     return np.random.default_rng(np.random.SeedSequence([seed,snr_index,role]))
 
 
-def episode(cfg, scenario, db, seed, snr_index):
+def episode(cfg, scenario, db, seed, snr_index, trajectory=None):
     initial,changed=validate(cfg)
+    if trajectory is not None:
+        trajectory=np.asarray(trajectory,float)
+        if trajectory.shape!=(cfg['episode_frames'],) or not np.all(np.isfinite(trajectory)) or np.any((trajectory<0)|(trajectory>1)):
+            raise ValueError('trajectory must supply one finite weight in [0,1] per frame')
     layout=comb_grid(cfg['pilot_spacing']);bins=layout.bins(layout.data_tones)
     base_noise=pilot_noise_variance(db,layout,cfg['cp_len'])
     rng=stream_rng(seed,snr_index,1)
@@ -65,6 +69,16 @@ def episode(cfg, scenario, db, seed, snr_index):
         post=t>=cfg['switch_after_frames']
         powers=post_powers if post else initial;noise=post_noise if post else base_noise
         matched=matched_after if post else matched_before
+        if trajectory is not None:
+            alpha=trajectory[t]
+            if alpha==0:
+                powers,noise,matched=initial,base_noise,matched_before
+            elif alpha==1:
+                powers,noise,matched=post_powers,post_noise,matched_after
+            else:
+                powers=(1-alpha)*initial+alpha*post_powers
+                noise=base_noise*((1-alpha)+alpha*scenario['noise_factor'])
+                matched=TapDomainLMMSE(layout,powers,noise)
         y,p,bits,truth=simulate_frame(rng,powers,noise,layout,cfg['cp_len'],cfg['symbols_per_frame'])
         # Snapshot mappings BEFORE scoring or ingesting any current-frame pilots.
         mappings={'matched':matched.mapping,'ls_linear':linear,'tap_ls':tap.mapping,**{k:v.model.mapping for k,v in trackers.items()}}
