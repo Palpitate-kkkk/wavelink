@@ -22,3 +22,5 @@ reports/tapls/*.png
 reports/lmmse/*.png
 
 reports/learned/*.png
+
+reports/drift/*.png

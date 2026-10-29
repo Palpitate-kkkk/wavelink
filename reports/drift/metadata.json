@@ -1,0 +1,147 @@
+{
+  "config": {
+    "sample_rate_hz": 1000000,
+    "cp_len": 16,
+    "pilot_spacing": 4,
+    "ebn0_db": [
+      6,
+      18
+    ],
+    "seeds": [
+      61001,
+      61002,
+      61003,
+      61004,
+      61005,
+      61006,
+      61007,
+      61008,
+      61009,
+      61010,
+      61011,
+      61012
+    ],
+    "calibration_frames": 64,
+    "episode_frames": 192,
+    "switch_after_frames": 96,
+    "transient_frames": 64,
+    "symbols_per_frame": 20,
+    "assumed_length": 13,
+    "initial_powers": [
+      0.8,
+      0,
+      0,
+      0,
+      0.12,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.08
+    ],
+    "changed_powers": [
+      0.1,
+      0,
+      0,
+      0,
+      0.2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7
+    ],
+    "scenarios": [
+      {
+        "name": "stationary",
+        "change_pdp": false,
+        "noise_factor": 1.0
+      },
+      {
+        "name": "pdp_only",
+        "change_pdp": true,
+        "noise_factor": 1.0
+      },
+      {
+        "name": "noise_only",
+        "change_pdp": false,
+        "noise_factor": 4.0
+      },
+      {
+        "name": "both",
+        "change_pdp": true,
+        "noise_factor": 4.0
+      }
+    ],
+    "policies": [
+      {
+        "name": "frozen",
+        "window": 64,
+        "update_every": null
+      },
+      {
+        "name": "periodic_64_32",
+        "window": 64,
+        "update_every": 32
+      },
+      {
+        "name": "rolling_16",
+        "window": 16,
+        "update_every": 1
+      },
+      {
+        "name": "rolling_64",
+        "window": 64,
+        "update_every": 1
+      }
+    ],
+    "trace_bin_frames": 8
+  },
+  "command": [
+    "python",
+    "-m",
+    "experiments.drift_ber",
+    "--output",
+    "reports/drift",
+    "--plot"
+  ],
+  "output_directory": "reports/drift",
+  "python": "3.13.5",
+  "numpy": "2.4.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "base_commit": "a498575dda00438b7f14fd984a1c540f8961d23e",
+  "working_tree_dirty": true,
+  "source_sha256": {
+    "src/wavelink/__init__.py": "0bd32de7372feb936af66d6096dc2081a95b271fa0210c0a3c09dc61fa929474",
+    "src/wavelink/baseband.py": "8f59ed824e9c1a870209e980bbd910a7c4d39c7a82392abbe99d3edabd7baa59",
+    "src/wavelink/channel.py": "18593324a0aee7a4dfc7c6ee093241a5cfb0493da87665b08793100b4474c0b9",
+    "src/wavelink/estimation.py": "d817eda2eab2c1c096e927981bc25c7085d27d64440adb415b47b59d72fc7e5b",
+    "src/wavelink/receiver.py": "bd6ab319264b327036b2adb200ad4cf2ec08674006eb0f9644266200c181ae44",
+    "src/wavelink/statistics.py": "eb840a7f094f6e762761ae69d0252883530aa5103ac03da5987ac63558c597a0",
+    "src/wavelink/tracking.py": "c2173bd59460d250e516376f9f50068e2d454d79be12cc9679101b1e5659bb14",
+    "experiments/drift_ber.py": "84e7591b86d8ab8e8da5c722d8a53a2d4ab436e9d83ed63c4d4f127b87e7cbd0",
+    "experiments/learned_ber.py": "7d54e69f61a10a4386c1408f8710ef7c0d1f34efa38a7733d557a5cff88b6541",
+    "experiments/lmmse_ber.py": "a62d6266bb9de08d727f75909df1d09f5b74d0dd26171f36e4994d810504d464",
+    "experiments/multipath_ber.py": "297cd29d0bd1aea5e7af7fa1bfb9356742400a546d3809d9cecedc0887bacf3f",
+    "experiments/drift.json": "21574475d7da62f4f47bd27641834d38c3af7dcbcc39cd7f99fe203166f4717a"
+  },
+  "random_streams": "SeedSequence [seed,snr_index,role], role 1 calibration, role 2 episode; scenarios reuse latent draws",
+  "causality": "Estimate and score frame t using statistics updated at most through t-1; advance only after scoring; no final unused update",
+  "uncertainty": "Independent whole episodes are units, including theory residual and paired comparisons; frames and overlapping windows not treated as independent",
+  "energy": "Fixed transmitter Eb; post-change noise factor 4 lowers actual Eb/N0 by 6.0206 dB; initial Eb/N0 labels are not post-change SNR",
+  "priors": "Known L and block-static uncorrelated zero-mean taps; policy never receives scenario, true statistics or change time",
+  "timing": "perf_counter_ns diagnostic for each fit, includes statistics fitting and LMMSE construction; no formal latency benchmark",
+  "thread_environment": {
+    "OMP_NUM_THREADS": null,
+    "OPENBLAS_NUM_THREADS": null,
+    "MKL_NUM_THREADS": null,
+    "VECLIB_MAXIMUM_THREADS": null
+  },
+  "stopping_rule": "Fixed scenarios, change schedule, windows, strides, seeds and episode lengths; no test-driven selection"
+}

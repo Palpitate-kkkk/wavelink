@@ -130,3 +130,17 @@ python -m experiments.learned_ber --output results/learned --plot
 [估计公式、隔离方式、开销与边界](docs/learned.md) · [测试结果](reports/learned/summary.csv) · [校准诊断](reports/learned/calibration.csv)
 
 39 项测试、144/144 条件 NMSE 检查和 48/48 Oracle BER 检查通过。学习接口不接收真实 PDP 或噪声功率；仍需已知时延上界、帧内静态及校准/测试同分布。两层标准误分别反映给定模型后的测试波动和独立校准/测试重复的波动；目前只有 3 次独立校准重复，尚未验证统计漂移。
+
+## 统计漂移与因果更新（已验证）
+
+```bash
+python -m experiments.drift_ber --output results/drift --plot
+```
+
+对照统计不变、仅 PDP 改变、仅噪声改变、两者同时改变；比较冻结模型、64 帧窗口每 32 帧更新、16/64 帧窗口每帧更新。先计分当前帧，再用其导频更新未来模型，接收机不知道真实变化时刻。
+
+![Causal tracking, initial 6 dB](reports/drift/drift_6.svg)
+
+[时序、准确性检查、结果与成本](docs/drift.md) · [汇总及链路级 SE](reports/drift/summary.csv) · [更新次数和因果审计](reports/drift/costs.csv)
+
+45 项测试、224/224 NMSE 残差检查和 32/32 Oracle BER 检查通过。每个配置做 12 次独立整段链路重复，不将重叠窗口或相关帧当成独立样本。小窗口恢复较快但可能增加稳定场景的误差，高信噪比下更新收益可能较小；实际噪声翻倍数会改变实际 Eb/N0，详见报告。

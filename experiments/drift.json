@@ -1,0 +1,104 @@
+{
+  "sample_rate_hz": 1000000,
+  "cp_len": 16,
+  "pilot_spacing": 4,
+  "ebn0_db": [
+    6,
+    18
+  ],
+  "seeds": [
+    61001,
+    61002,
+    61003,
+    61004,
+    61005,
+    61006,
+    61007,
+    61008,
+    61009,
+    61010,
+    61011,
+    61012
+  ],
+  "calibration_frames": 64,
+  "episode_frames": 192,
+  "switch_after_frames": 96,
+  "transient_frames": 64,
+  "symbols_per_frame": 20,
+  "assumed_length": 13,
+  "initial_powers": [
+    0.8,
+    0,
+    0,
+    0,
+    0.12,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0.08
+  ],
+  "changed_powers": [
+    0.1,
+    0,
+    0,
+    0,
+    0.2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0.7
+  ],
+  "scenarios": [
+    {
+      "name": "stationary",
+      "change_pdp": false,
+      "noise_factor": 1.0
+    },
+    {
+      "name": "pdp_only",
+      "change_pdp": true,
+      "noise_factor": 1.0
+    },
+    {
+      "name": "noise_only",
+      "change_pdp": false,
+      "noise_factor": 4.0
+    },
+    {
+      "name": "both",
+      "change_pdp": true,
+      "noise_factor": 4.0
+    }
+  ],
+  "policies": [
+    {
+      "name": "frozen",
+      "window": 64,
+      "update_every": null
+    },
+    {
+      "name": "periodic_64_32",
+      "window": 64,
+      "update_every": 32
+    },
+    {
+      "name": "rolling_16",
+      "window": 16,
+      "update_every": 1
+    },
+    {
+      "name": "rolling_64",
+      "window": 64,
+      "update_every": 1
+    }
+  ],
+  "trace_bin_frames": 8
+}
