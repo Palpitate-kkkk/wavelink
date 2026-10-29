@@ -1,0 +1,391 @@
+{
+  "config": {
+    "sample_rate_hz": 1000000,
+    "cp_len": 16,
+    "pilot_spacing": 4,
+    "ebn0_db": [
+      6,
+      18
+    ],
+    "calibration_frames": 64,
+    "symbols_per_frame": 20,
+    "assumed_length": 13,
+    "episode_frames": 320,
+    "post_frames": 224,
+    "guard": {
+      "monitor_window": 16,
+      "check_every": 8,
+      "refresh_every": 32,
+      "fallback_power": 1.0
+    },
+    "development": {
+      "seeds": [
+        141001,
+        141002,
+        141003,
+        141004,
+        141005,
+        141006,
+        141007,
+        141008
+      ],
+      "schedule_seed": 142001
+    },
+    "test": {
+      "seeds": [
+        151001,
+        151002,
+        151003,
+        151004,
+        151005,
+        151006,
+        151007,
+        151008,
+        151009,
+        151010,
+        151011,
+        151012,
+        151013,
+        151014,
+        151015,
+        151016,
+        151017,
+        151018,
+        151019,
+        151020,
+        151021,
+        151022,
+        151023,
+        151024,
+        151025,
+        151026,
+        151027,
+        151028,
+        151029,
+        151030,
+        151031,
+        151032
+      ],
+      "schedule_seed": 152001
+    },
+    "states": {
+      "initial": [
+        0.8,
+        0,
+        0,
+        0,
+        0.12,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0.08,
+        0,
+        0,
+        0,
+        0
+      ],
+      "new_paths": [
+        0.1,
+        0.0,
+        0.2,
+        0.0,
+        0.0,
+        0.0,
+        0.4,
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.0,
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+        0
+      ],
+      "delay13": [
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.7,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "delay15": [
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.7,
+        0.0
+      ],
+      "delay16": [
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.7
+      ],
+      "weak15": [
+        0.75,
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.05,
+        0.0
+      ]
+    },
+    "scenarios": [
+      {
+        "name": "stationary",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "initial",
+            "noise_factor": 1.0
+          }
+        ]
+      },
+      {
+        "name": "noise_jump",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "initial",
+            "noise_factor": 4.0
+          }
+        ]
+      },
+      {
+        "name": "persistent15",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "delay15",
+            "noise_factor": 1.0
+          }
+        ]
+      },
+      {
+        "name": "weak15",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "weak15",
+            "noise_factor": 1.0
+          }
+        ]
+      },
+      {
+        "name": "return15",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "delay15",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 64,
+            "state": "initial",
+            "noise_factor": 1.0
+          }
+        ]
+      },
+      {
+        "name": "return_new",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "delay15",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 64,
+            "state": "new_paths",
+            "noise_factor": 1.0
+          }
+        ]
+      },
+      {
+        "name": "repeat64",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "delay15",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 64,
+            "state": "initial",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 128,
+            "state": "delay15",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 192,
+            "state": "initial",
+            "noise_factor": 1.0
+          }
+        ]
+      },
+      {
+        "name": "repeat24",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "delay15",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 24,
+            "state": "initial",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 48,
+            "state": "delay15",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 72,
+            "state": "initial",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 96,
+            "state": "delay15",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 120,
+            "state": "initial",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 144,
+            "state": "delay15",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 168,
+            "state": "initial",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 192,
+            "state": "delay15",
+            "noise_factor": 1.0
+          }
+        ]
+      }
+    ],
+    "release_checks": [
+      4,
+      8
+    ],
+    "exit_threshold": 1.5,
+    "entry_threshold": 4.0,
+    "baseline_metadata": "reports/guard/metadata.json",
+    "baseline_metadata_sha256": "e34c29b71c8957dd6c33e93ced5a2c090ddd11b7030d2cba5d3bbc457ef83baf"
+  },
+  "source_sha256": {
+    "src/wavelink/__init__.py": "0bd32de7372feb936af66d6096dc2081a95b271fa0210c0a3c09dc61fa929474",
+    "src/wavelink/baseband.py": "8f59ed824e9c1a870209e980bbd910a7c4d39c7a82392abbe99d3edabd7baa59",
+    "src/wavelink/channel.py": "18593324a0aee7a4dfc7c6ee093241a5cfb0493da87665b08793100b4474c0b9",
+    "src/wavelink/estimation.py": "d817eda2eab2c1c096e927981bc25c7085d27d64440adb415b47b59d72fc7e5b",
+    "src/wavelink/guard.py": "a02036e06840d973012ff463e7c557125c21f6571c1cf78aa06a1eb98f7e0220",
+    "src/wavelink/receiver.py": "bd6ab319264b327036b2adb200ad4cf2ec08674006eb0f9644266200c181ae44",
+    "src/wavelink/recovery.py": "c244a1ed431e86246c1947778d3aa52489c36b01d9cb54583c22be90e530501d",
+    "src/wavelink/statistics.py": "eb840a7f094f6e762761ae69d0252883530aa5103ac03da5987ac63558c597a0",
+    "src/wavelink/tracking.py": "2c7b771080dd9dab45c7043f3a726003c0fcbb6d4295d4e25c5376b8a5681476",
+    "experiments/__init__.py": "e5fb415835371f7a8ec178d5443a9ee0d01b884962b0a552879673507af52976",
+    "experiments/awgn_ber.py": "66d7da999f0e6e6fa92c66a75c26e34cf70b4065e1feacba606b584d042cf3d4",
+    "experiments/drift_ber.py": "bb081ecc6490269055fc181612da946ba054fc9574cc4e0ccc51212a5554cad4",
+    "experiments/generalization_ber.py": "f8bd3106a75ef921a8d8afd88d2ae580b22fb10a4283017de5c28e878c833feb",
+    "experiments/guard_ber.py": "cde3b98f904a4024e6ecac4a053e60750ebde6923e3fbe1ea6d4d26d5a6502cc",
+    "experiments/learned_ber.py": "7d54e69f61a10a4386c1408f8710ef7c0d1f34efa38a7733d557a5cff88b6541",
+    "experiments/lmmse_ber.py": "a62d6266bb9de08d727f75909df1d09f5b74d0dd26171f36e4994d810504d464",
+    "experiments/multipath_ber.py": "297cd29d0bd1aea5e7af7fa1bfb9356742400a546d3809d9cecedc0887bacf3f",
+    "experiments/recovery_ber.py": "2abb68f0647b1599dced8d5c168f1c5e372df5ac0a25d221f8873eeb5f28ed25",
+    "experiments/robustness_ber.py": "e6cf337a4bb48e900bf479511578edef8345c00d829c7dd91379540041ce2c8d",
+    "experiments/tapls_ber.py": "39454d4f40a57dd763159216a1d037e0d8d900652b5d157af4bdd62b9cc8c3d3",
+    "experiments/triggered_ber.py": "7908281a6652bcebbbd683cca370ef52bf21422c1db1c8c33c04e6f2a2948ed8",
+    "experiments/recovery.json": "db813aea80f2e32ecbda6dc6c448adc208b88873bddf78ede3e0e3c5a8b2cbf1",
+    "experiments/generalization.json": "9cbb7e33b753805ae1bb9bc44e4412831bb55568f191ef73a0210356c921630a",
+    "experiments/triggered.json": "1f8a4dcc777a7ccf5163a6b870c357dbd93b024190a011dfa49bdbae1feddeff"
+  },
+  "selection_sha256": "d74a29e17d226f5b537936ee5dd5f108ae838afb4e3277306a94f7aa713f361b",
+  "command": [
+    "python",
+    "-m",
+    "experiments.recovery_ber",
+    "--output",
+    "results/recovery",
+    "--plot"
+  ],
+  "test_started_at_utc": "2026-10-29T08:40:12.422181+00:00",
+  "finished_at_utc": "2026-10-29T08:43:35.737425+00:00",
+  "base_commit": "a379e147ac4e039f4e81ab9cb987994fdb93eb8f",
+  "working_tree_dirty": true,
+  "python": "3.13.5",
+  "numpy": "2.4.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "causality": "Score current frame before advance; alarm and release apply from next frame; release refits latest 64 observed frames and resets primary local update clock",
+  "scope": "Independent-seed replication on declared known/extended synthetic scenarios, not hardware or unseen-scenario certification",
+  "uncertainty": "Whole independent episodes; phase assignment balanced; scenarios reuse latent streams; paired SE vs latched saved explicitly",
+  "priors": "Integer delays, ideal sync, frame-static uncorrelated taps, sufficient CP, unit ensemble total-power fallback prior",
+  "costs": "updates count effective next-frame replacements; overwritten same-frame rebuild time retained; release full-history refit visits and initialization work counted as online update cost",
+  "stopping_rule": "Development selection persisted before independent test, no test-driven changes; all failed gates and scenarios retained"
+}

@@ -1,0 +1,341 @@
+{
+  "sample_rate_hz": 1000000,
+  "cp_len": 16,
+  "pilot_spacing": 4,
+  "ebn0_db": [
+    6,
+    18
+  ],
+  "calibration_frames": 64,
+  "symbols_per_frame": 20,
+  "assumed_length": 13,
+  "episode_frames": 320,
+  "post_frames": 224,
+  "guard": {
+    "monitor_window": 16,
+    "check_every": 8,
+    "refresh_every": 32,
+    "fallback_power": 1.0
+  },
+  "development": {
+    "seeds": [
+      141001,
+      141002,
+      141003,
+      141004,
+      141005,
+      141006,
+      141007,
+      141008
+    ],
+    "schedule_seed": 142001
+  },
+  "test": {
+    "seeds": [
+      151001,
+      151002,
+      151003,
+      151004,
+      151005,
+      151006,
+      151007,
+      151008,
+      151009,
+      151010,
+      151011,
+      151012,
+      151013,
+      151014,
+      151015,
+      151016,
+      151017,
+      151018,
+      151019,
+      151020,
+      151021,
+      151022,
+      151023,
+      151024,
+      151025,
+      151026,
+      151027,
+      151028,
+      151029,
+      151030,
+      151031,
+      151032
+    ],
+    "schedule_seed": 152001
+  },
+  "states": {
+    "initial": [
+      0.8,
+      0,
+      0,
+      0,
+      0.12,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.08,
+      0,
+      0,
+      0,
+      0
+    ],
+    "new_paths": [
+      0.1,
+      0.0,
+      0.2,
+      0.0,
+      0.0,
+      0.0,
+      0.4,
+      0.0,
+      0.0,
+      0.0,
+      0.2,
+      0.0,
+      0.1,
+      0.0,
+      0.0,
+      0.0,
+      0
+    ],
+    "delay13": [
+      0.1,
+      0.0,
+      0.0,
+      0.0,
+      0.2,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.7,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "delay15": [
+      0.1,
+      0.0,
+      0.0,
+      0.0,
+      0.2,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.7,
+      0.0
+    ],
+    "delay16": [
+      0.1,
+      0.0,
+      0.0,
+      0.0,
+      0.2,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.7
+    ],
+    "weak15": [
+      0.75,
+      0.0,
+      0.0,
+      0.0,
+      0.2,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.05,
+      0.0
+    ]
+  },
+  "scenarios": [
+    {
+      "name": "stationary",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "initial",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "noise_jump",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "initial",
+          "noise_factor": 4.0
+        }
+      ]
+    },
+    {
+      "name": "persistent15",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "delay15",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "weak15",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "weak15",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "return15",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 64,
+          "state": "initial",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "return_new",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 64,
+          "state": "new_paths",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "repeat64",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 64,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 128,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 192,
+          "state": "initial",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "repeat24",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 24,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 48,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 72,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 96,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 120,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 144,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 168,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 192,
+          "state": "delay15",
+          "noise_factor": 1.0
+        }
+      ]
+    }
+  ],
+  "release_checks": [
+    4,
+    8
+  ],
+  "exit_threshold": 1.5,
+  "entry_threshold": 4.0,
+  "baseline_metadata": "reports/guard/metadata.json",
+  "baseline_metadata_sha256": "e34c29b71c8957dd6c33e93ced5a2c090ddd11b7030d2cba5d3bbc457ef83baf"
+}

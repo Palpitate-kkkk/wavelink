@@ -32,3 +32,5 @@ reports/triggered/*.png
 reports/generalization/*.png
 
 reports/guard/*.png
+
+reports/recovery/*.png

@@ -200,3 +200,17 @@ python -m experiments.guard_ber --output results/guard --plot
 [方法、开发失败与恢复代价](docs/guard.md) · [阈值锁定记录](reports/guard/selection.json) · [独立测试](reports/guard/summary.csv) · [告警诊断](reports/guard/detection.csv)
 
 75 项测试、392/392 NMSE 残差检查及 56/56 Oracle BER 检查通过。延迟 15、18 dB 的 BER 从 0.361202 降至 0.033640；支撑正确的三类测试场景未告警，输出与旧策略一致。开发条件没有全部通过，阈值 4 来自预定的失败兜底规则；路径恢复后的 6 dB 场景 BER 从 0.196584 升至 0.213851。保留全部数据，不把持续越界下的收益推广为所有状态下的提升。
+
+## 告警解除与历史重校准（已验证）
+
+```bash
+python -m experiments.recovery_ber --output results/recovery --plot
+```
+
+在上一版回退上加入滞回解除；连续低残差确认后，用最近 64 帧导频重建主模型，支持再次告警。开发选择 8 次确认，独立测试检查恢复到原路径/不同路径结构、持续越界、弱越界和 24/64 帧反复变化。
+
+![Guard release and re-calibration](reports/recovery/recovery.svg)
+
+[方法、恢复收益与等待代价](docs/recovery.md) · [参数锁](reports/recovery/selection.json) · [测试结果](reports/recovery/summary.csv) · [逐次响应](reports/recovery/responses.csv)
+
+85 项测试、512/512 NMSE 残差检查、64/64 Oracle BER 检查通过。在路径恢复、6 dB 场景，相对锁定版的 post_all BER 从 0.212828 降至 0.166847；post_late 从 0.223685 降至 0.101788。测试中未出现越界期间解除，代价是恢复需 72..79 帧；快速反复变化仍未解除，不能推广为所有变化速度下的改善。
