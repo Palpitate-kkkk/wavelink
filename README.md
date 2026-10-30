@@ -269,3 +269,15 @@ VECLIB_MAXIMUM_THREADS=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREAD
 本次 arm64 Mac 测量中，延迟复核在线耗时比增量周期基线高约 8%～13%，原周期的批量 NumPy 实现反而更快。减少重建次数未转化为总体加速；这是指定机器/工作负载的结果，不作为实时或跨硬件结论。
 
 [方法、实测与边界](docs/runtime.md) · [计时与 SE](reports/runtime/summary.csv) · [全部重放](reports/runtime/runs.csv) · [等价性审计](reports/runtime/equivalence.csv) · [环境与源码哈希](reports/runtime/metadata.json)
+
+## 频偏估计与补偿（已知帧边界，含捕获失败）
+
+```bash
+python -m experiments.cfo_ber --output results/cfo
+```
+
+新增时域载波频偏、144 点重复训练头及相关相位估计，原延迟复核接收策略冻结。比较未补偿、训练估计补偿与真实频偏补偿，计入训练/warmup 能量和每个分支独立经过前端的校准。仍假设已知帧边界，尚未实现完整同步。
+
+64 段场景链路上，18 dB 弱路径、归一化频偏 0.05（781.25 Hz）的 post_all BER 从 0.104093 降至 0.012490，同批零频偏参考为 0.012480。超出捕获范围的 1.2 仍接近随机判决，零频偏时估计噪声也可能轻微退化。138 项测试、98,304 次 Oracle 补偿栅格检查通过；共享潜在噪声的配对方式和剩余 CFO 统计边界完整披露。
+
+[模型、结果、开销与失败边界](docs/cfo.md) · [测试协议](reports/cfo/protocol.json) · [BER 与配对 SE](reports/cfo/summary.csv) · [频偏估计误差](reports/cfo/frequency_errors.csv)

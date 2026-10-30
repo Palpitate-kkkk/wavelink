@@ -1,0 +1,38 @@
+{
+  "protocol": "experiments/followup.json",
+  "protocol_sha256": "aa66adb34e0ee8ab5fbf8f5e68f8ef0e3340b061a22a08e08eb0dffe1cdd71e1",
+  "baseline_metadata_sha256": "1eecd2e90e47327ce82cef6b3f8b9d24a54c81da8c097bda3fbd469050e9f10b",
+  "scenarios": [
+    "stationary",
+    "weak15"
+  ],
+  "ebn0_db": [
+    6,
+    18
+  ],
+  "offsets": [
+    0.0,
+    0.05,
+    0.2,
+    1.2
+  ],
+  "seeds": [
+    231001,
+    231002,
+    231003,
+    231004,
+    231005,
+    231006,
+    231007,
+    231008,
+    231009,
+    231010,
+    231011,
+    231012,
+    231013,
+    231014,
+    231015,
+    231016
+  ],
+  "schedule_seed": 232001
+}
