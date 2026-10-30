@@ -1,0 +1,93 @@
+{
+  "config": {
+    "protocol": "experiments/followup.json",
+    "baseline_metadata_sha256": "1eecd2e90e47327ce82cef6b3f8b9d24a54c81da8c097bda3fbd469050e9f10b",
+    "scenarios": [
+      "stationary",
+      "weak15",
+      "repeat24"
+    ],
+    "ebn0_db": [
+      6,
+      18
+    ],
+    "seeds": [
+      221001,
+      221002,
+      221003,
+      221004
+    ],
+    "onset_phases": [
+      0,
+      8,
+      16,
+      24
+    ],
+    "cycles": 2
+  },
+  "source_sha256": {
+    "src/wavelink/__init__.py": "0bd32de7372feb936af66d6096dc2081a95b271fa0210c0a3c09dc61fa929474",
+    "src/wavelink/baseband.py": "8f59ed824e9c1a870209e980bbd910a7c4d39c7a82392abbe99d3edabd7baa59",
+    "src/wavelink/channel.py": "18593324a0aee7a4dfc7c6ee093241a5cfb0493da87665b08793100b4474c0b9",
+    "src/wavelink/estimation.py": "d817eda2eab2c1c096e927981bc25c7085d27d64440adb415b47b59d72fc7e5b",
+    "src/wavelink/followup.py": "bd0966dd237b454a449308b9747f75f1a46b244b35aae70b7cfa8901f4581871",
+    "src/wavelink/guard.py": "a02036e06840d973012ff463e7c557125c21f6571c1cf78aa06a1eb98f7e0220",
+    "src/wavelink/innovation.py": "db1d21dbc4636f60c6be8b3d5f1da70817ff7c7c6555209281c1f78c6d07f2a6",
+    "src/wavelink/periodic.py": "f2d5ca4829371a601814bb9313c7e32e4e7c66a58397a37af3db25bf20955475",
+    "src/wavelink/receiver.py": "bd6ab319264b327036b2adb200ad4cf2ec08674006eb0f9644266200c181ae44",
+    "src/wavelink/recovery.py": "c244a1ed431e86246c1947778d3aa52489c36b01d9cb54583c22be90e530501d",
+    "src/wavelink/statistics.py": "eb840a7f094f6e762761ae69d0252883530aa5103ac03da5987ac63558c597a0",
+    "src/wavelink/tracking.py": "2c7b771080dd9dab45c7043f3a726003c0fcbb6d4295d4e25c5376b8a5681476",
+    "experiments/__init__.py": "e5fb415835371f7a8ec178d5443a9ee0d01b884962b0a552879673507af52976",
+    "experiments/awgn_ber.py": "66d7da999f0e6e6fa92c66a75c26e34cf70b4065e1feacba606b584d042cf3d4",
+    "experiments/density_ber.py": "5a28f933a02241f12ed8ace67f9f73ca47983d99780de5e9226e78a2bc997f06",
+    "experiments/drift_ber.py": "bb081ecc6490269055fc181612da946ba054fc9574cc4e0ccc51212a5554cad4",
+    "experiments/followup_ber.py": "a43bf3f2faf14e69e1272760ffb656e2f44d2c9ea6656c4780976ba1c3de7d5d",
+    "experiments/generalization_ber.py": "f8bd3106a75ef921a8d8afd88d2ae580b22fb10a4283017de5c28e878c833feb",
+    "experiments/guard_ber.py": "cde3b98f904a4024e6ecac4a053e60750ebde6923e3fbe1ea6d4d26d5a6502cc",
+    "experiments/innovation_ber.py": "ba979121dc53c906e4a370a3eda0f909bbe4564454720ad5ca30a60faa96b741",
+    "experiments/learned_ber.py": "7d54e69f61a10a4386c1408f8710ef7c0d1f34efa38a7733d557a5cff88b6541",
+    "experiments/lmmse_ber.py": "a62d6266bb9de08d727f75909df1d09f5b74d0dd26171f36e4994d810504d464",
+    "experiments/multipath_ber.py": "297cd29d0bd1aea5e7af7fa1bfb9356742400a546d3809d9cecedc0887bacf3f",
+    "experiments/recovery_ber.py": "2abb68f0647b1599dced8d5c168f1c5e372df5ac0a25d221f8873eeb5f28ed25",
+    "experiments/robustness_ber.py": "e6cf337a4bb48e900bf479511578edef8345c00d829c7dd91379540041ce2c8d",
+    "experiments/runtime_benchmark.py": "8e179ff9c84df2e8c5ed9f174b66548545e7c662a839ce57666e10bbf0eec1d3",
+    "experiments/tapls_ber.py": "39454d4f40a57dd763159216a1d037e0d8d900652b5d157af4bdd62b9cc8c3d3",
+    "experiments/triggered_ber.py": "7908281a6652bcebbbd683cca370ef52bf21422c1db1c8c33c04e6f2a2948ed8",
+    "experiments/runtime.json": "82bed90f4788c4450f40fb96dded7faa520c25faa40cb4b2ab377aaeb58687cc",
+    "experiments/followup.json": "aa66adb34e0ee8ab5fbf8f5e68f8ef0e3340b061a22a08e08eb0dffe1cdd71e1"
+  },
+  "base_commit": "d0b5b19ea2545038771f7c7f2630a8bcb645c5cf",
+  "working_tree_dirty": true,
+  "command": [
+    "python",
+    "-m",
+    "experiments.runtime_benchmark",
+    "--output",
+    "reports/runtime"
+  ],
+  "started_at_utc": "2026-10-30T04:24:35.520890+00:00",
+  "finished_at_utc": "2026-10-30T04:24:55.631322+00:00",
+  "python": "3.13.5",
+  "numpy": "2.4.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "machine": "arm64",
+  "blas_configuration": "{\n  \"Compilers\": {\n    \"c\": {\n      \"name\": \"clang\",\n      \"linker\": \"ld64\",\n      \"version\": \"15.0.0\",\n      \"commands\": \"cc\"\n    },\n    \"cython\": {\n      \"name\": \"cython\",\n      \"linker\": \"cython\",\n      \"version\": \"3.2.4\",\n      \"commands\": \"cython\"\n    },\n    \"c++\": {\n      \"name\": \"clang\",\n      \"linker\": \"ld64\",\n      \"version\": \"15.0.0\",\n      \"commands\": \"c++\"\n    }\n  },\n  \"Machine Information\": {\n    \"host\": {\n      \"cpu\": \"aarch64\",\n      \"family\": \"aarch64\",\n      \"endian\": \"little\",\n      \"system\": \"darwin\"\n    },\n    \"build\": {\n      \"cpu\": \"aarch64\",\n      \"family\": \"aarch64\",\n      \"endian\": \"little\",\n      \"system\": \"darwin\"\n    }\n  },\n  \"Build Dependencies\": {\n    \"blas\": {\n      \"name\": \"accelerate\",\n      \"found\": true,\n      \"version\": \"unknown\",\n      \"detection method\": \"system\",\n      \"include directory\": \"unknown\",\n      \"lib directory\": \"unknown\",\n      \"openblas configuration\": \"unknown\",\n      \"pc file directory\": \"unknown\"\n    },\n    \"lapack\": {\n      \"name\": \"accelerate\",\n      \"found\": true,\n      \"version\": \"unknown\",\n      \"detection method\": \"system\",\n      \"include directory\": \"unknown\",\n      \"lib directory\": \"unknown\",\n      \"openblas configuration\": \"unknown\",\n      \"pc file directory\": \"unknown\"\n    }\n  },\n  \"Python Information\": {\n    \"path\": \"/private/var/folders/pr/_3h4tm913_l56k6hrhpm89z00000gn/T/build-env-vzb0a20x/bin/python\",\n    \"version\": \"3.13\"\n  },\n  \"SIMD Extensions\": {\n    \"baseline\": [\n      \"NEON\",\n      \"NEON_FP16\",\n      \"NEON_VFPV4\",\n      \"ASIMD\"\n    ],\n    \"found\": [\n      \"ASIMDHP\",\n      \"ASIMDDP\"\n    ],\n    \"not found\": [\n      \"ASIMDFHM\"\n    ]\n  }\n}\n",
+  "clock": {
+    "implementation": "mach_absolute_time()",
+    "monotonic": true,
+    "adjustable": false,
+    "resolution": 4.166666666666666e-08
+  },
+  "thread_environment": {
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "gc": "disabled during all workloads, original state restored",
+  "timing": "External full constructor and estimate/ZF/QPSK/advance loop; includes internal instrumentation, allocations and output/event collection; excludes waveform generation, truth/error scoring, hashing, equivalence assertions and report I/O",
+  "ordering": "One whole untimed warmup per method per episode, then seeded randomized Latin rotations; each method occupies each position equally",
+  "uncertainty": "Median of technical repeats per seed, then mean and descriptive SE of four seed branches; scenario streams shared, not independent experiment replications; timings are machine/session specific",
+  "scope": "Frozen v0.15 policies; no timing-based algorithm selection; cached periodic output equivalence checked; no claims of hard real time or cross-hardware speedup"
+}

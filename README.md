@@ -256,3 +256,16 @@ python -m experiments.followup_ber --output results/followup --plot
 [计划规则、独立结果与代价](docs/followup.md) · [选择锁](reports/followup/selection.json) · [汇总](reports/followup/summary.csv) · [计划日志](reports/followup/plans.csv)
 
 116 项测试、432/432 NMSE 残差检查和 72/72 Oracle BER 检查通过。18 dB 弱路径单元的晚期 NMSE 从 0.005578 降至 0.002597，整段 BER 从 0.013843 降至 0.012832；本批场景平均重建从 3.38542 增至 3.53819。repeat64、6 dB 的平均 NMSE 约退化 0.68%，低 SNR 下仍未全面胜过周期策略，失败边界与未执行计划完整保留。
+
+## 完整耗时与增量周期基线（已验证，未观察到加速）
+
+```bash
+VECLIB_MAXIMUM_THREADS=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 \
+  python -m experiments.runtime_benchmark --output results/runtime
+```
+
+新增与原周期策略数值等价的缓存统计实现，保持所有接收策略和阈值冻结。先预生成共同输入，完整预热，再交错运行 768 次计时重放；完整外层计时包括估计、均衡、解调、监测及更新。24 段工作负载、7,680 帧逐帧等价性检查通过，125 项自动测试通过。
+
+本次 arm64 Mac 测量中，延迟复核在线耗时比增量周期基线高约 8%～13%，原周期的批量 NumPy 实现反而更快。减少重建次数未转化为总体加速；这是指定机器/工作负载的结果，不作为实时或跨硬件结论。
+
+[方法、实测与边界](docs/runtime.md) · [计时与 SE](reports/runtime/summary.csv) · [全部重放](reports/runtime/runs.csv) · [等价性审计](reports/runtime/equivalence.csv) · [环境与源码哈希](reports/runtime/metadata.json)
