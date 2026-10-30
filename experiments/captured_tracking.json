@@ -1,0 +1,48 @@
+{
+  "baseline_metadata_sha256": "ee76e19b84a85b924fdf3cee5745f1c71c78cfbe925c709ff45f1f1026727958",
+  "capture_selection_sha256": "f63737e30485025c8f5ae261a58a1b3bdd0decf45467af804abc8858454a279d",
+  "gates": [
+    0.15,
+    0.25,
+    0.35
+  ],
+  "ebn0_db": [
+    6,
+    18
+  ],
+  "scenarios": [
+    "stationary",
+    "weak_drift",
+    "gap32",
+    "alias64",
+    "dirty_calibration"
+  ],
+  "development": {
+    "seeds": [
+      281001,
+      281002,
+      281003,
+      281004
+    ]
+  },
+  "test": {
+    "seeds": [
+      291001,
+      291002,
+      291003,
+      291004,
+      291005,
+      291006,
+      291007,
+      291008,
+      291009,
+      291010,
+      291011,
+      291012,
+      291013,
+      291014,
+      291015,
+      291016
+    ]
+  }
+}

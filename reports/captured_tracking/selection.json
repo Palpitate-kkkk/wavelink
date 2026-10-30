@@ -1,0 +1,116 @@
+{
+  "gate": 0.25,
+  "candidates": [
+    {
+      "gate": 0.15,
+      "worst_loss_ratio": 1.000591528307776,
+      "mean_loss": 0.20560799153645837,
+      "eligible": true
+    },
+    {
+      "gate": 0.25,
+      "worst_loss_ratio": 1.0008678504285926,
+      "mean_loss": 0.2052937825520833,
+      "eligible": true
+    },
+    {
+      "gate": 0.35,
+      "worst_loss_ratio": 1.0,
+      "mean_loss": 0.20543139648437497,
+      "eligible": true
+    }
+  ],
+  "eligible_candidate_found": true,
+  "config": {
+    "baseline_metadata_sha256": "ee76e19b84a85b924fdf3cee5745f1c71c78cfbe925c709ff45f1f1026727958",
+    "capture_selection_sha256": "f63737e30485025c8f5ae261a58a1b3bdd0decf45467af804abc8858454a279d",
+    "gates": [
+      0.15,
+      0.25,
+      0.35
+    ],
+    "ebn0_db": [
+      6,
+      18
+    ],
+    "scenarios": [
+      "stationary",
+      "weak_drift",
+      "gap32",
+      "alias64",
+      "dirty_calibration"
+    ],
+    "development": {
+      "seeds": [
+        281001,
+        281002,
+        281003,
+        281004
+      ]
+    },
+    "test": {
+      "seeds": [
+        291001,
+        291002,
+        291003,
+        291004,
+        291005,
+        291006,
+        291007,
+        291008,
+        291009,
+        291010,
+        291011,
+        291012,
+        291013,
+        291014,
+        291015,
+        291016
+      ]
+    }
+  },
+  "source_sha256": {
+    "src/wavelink/__init__.py": "0bd32de7372feb936af66d6096dc2081a95b271fa0210c0a3c09dc61fa929474",
+    "src/wavelink/acquisition.py": "6127b54e87fed2bfea9e455e76aa2a04e0141d693adec569bdd792ef2994fa73",
+    "src/wavelink/baseband.py": "8f59ed824e9c1a870209e980bbd910a7c4d39c7a82392abbe99d3edabd7baa59",
+    "src/wavelink/channel.py": "18593324a0aee7a4dfc7c6ee093241a5cfb0493da87665b08793100b4474c0b9",
+    "src/wavelink/estimation.py": "d817eda2eab2c1c096e927981bc25c7085d27d64440adb415b47b59d72fc7e5b",
+    "src/wavelink/followup.py": "bd0966dd237b454a449308b9747f75f1a46b244b35aae70b7cfa8901f4581871",
+    "src/wavelink/guard.py": "a02036e06840d973012ff463e7c557125c21f6571c1cf78aa06a1eb98f7e0220",
+    "src/wavelink/innovation.py": "db1d21dbc4636f60c6be8b3d5f1da70817ff7c7c6555209281c1f78c6d07f2a6",
+    "src/wavelink/periodic.py": "f2d5ca4829371a601814bb9313c7e32e4e7c66a58397a37af3db25bf20955475",
+    "src/wavelink/receiver.py": "bd6ab319264b327036b2adb200ad4cf2ec08674006eb0f9644266200c181ae44",
+    "src/wavelink/recovery.py": "c244a1ed431e86246c1947778d3aa52489c36b01d9cb54583c22be90e530501d",
+    "src/wavelink/slot_tracking.py": "dd2169bf1ec59f9337eed4ed1672bd16453123d332baa040850a547137a8b337",
+    "src/wavelink/statistics.py": "eb840a7f094f6e762761ae69d0252883530aa5103ac03da5987ac63558c597a0",
+    "src/wavelink/synchronization.py": "5552bd5ab6494e343dbb349559a91548e0476d4b0d04ccf54c220f09996f3f2a",
+    "src/wavelink/tracking.py": "2c7b771080dd9dab45c7043f3a726003c0fcbb6d4295d4e25c5376b8a5681476",
+    "experiments/__init__.py": "e5fb415835371f7a8ec178d5443a9ee0d01b884962b0a552879673507af52976",
+    "experiments/acquisition_ber.py": "6f86f1a99fc9ee3e7166571fa27b8f104be5008ce6edd81268f95c4cd93d7bb2",
+    "experiments/awgn_ber.py": "66d7da999f0e6e6fa92c66a75c26e34cf70b4065e1feacba606b584d042cf3d4",
+    "experiments/captured_tracking_ber.py": "0c158d097a91bc8303b7595d065c837bd56850a7d3574a8aa4dbb985c3217e8c",
+    "experiments/cfo_ber.py": "e11bf3153e2bfd63b1cb1fe6c88f174866455b4f7903ee171c00a048a511bb25",
+    "experiments/density_ber.py": "5a28f933a02241f12ed8ace67f9f73ca47983d99780de5e9226e78a2bc997f06",
+    "experiments/drift_ber.py": "bb081ecc6490269055fc181612da946ba054fc9574cc4e0ccc51212a5554cad4",
+    "experiments/followup_ber.py": "a43bf3f2faf14e69e1272760ffb656e2f44d2c9ea6656c4780976ba1c3de7d5d",
+    "experiments/generalization_ber.py": "f8bd3106a75ef921a8d8afd88d2ae580b22fb10a4283017de5c28e878c833feb",
+    "experiments/guard_ber.py": "cde3b98f904a4024e6ecac4a053e60750ebde6923e3fbe1ea6d4d26d5a6502cc",
+    "experiments/innovation_ber.py": "ba979121dc53c906e4a370a3eda0f909bbe4564454720ad5ca30a60faa96b741",
+    "experiments/learned_ber.py": "7d54e69f61a10a4386c1408f8710ef7c0d1f34efa38a7733d557a5cff88b6541",
+    "experiments/lmmse_ber.py": "a62d6266bb9de08d727f75909df1d09f5b74d0dd26171f36e4994d810504d464",
+    "experiments/multipath_ber.py": "297cd29d0bd1aea5e7af7fa1bfb9356742400a546d3809d9cecedc0887bacf3f",
+    "experiments/recovery_ber.py": "2abb68f0647b1599dced8d5c168f1c5e372df5ac0a25d221f8873eeb5f28ed25",
+    "experiments/robustness_ber.py": "e6cf337a4bb48e900bf479511578edef8345c00d829c7dd91379540041ce2c8d",
+    "experiments/runtime_benchmark.py": "8e179ff9c84df2e8c5ed9f174b66548545e7c662a839ce57666e10bbf0eec1d3",
+    "experiments/tapls_ber.py": "39454d4f40a57dd763159216a1d037e0d8d900652b5d157af4bdd62b9cc8c3d3",
+    "experiments/triggered_ber.py": "7908281a6652bcebbbd683cca370ef52bf21422c1db1c8c33c04e6f2a2948ed8",
+    "experiments/captured_tracking.json": "7083a38c887217f80b5695fe320f557884093e87bcbdaa9b1ebc2ce1cceb1cf8",
+    "experiments/followup.json": "aa66adb34e0ee8ab5fbf8f5e68f8ef0e3340b061a22a08e08eb0dffe1cdd71e1",
+    "experiments/acquisition.json": "5de37a7b09be60205e3ee68190ba069cd9d666c035cc5eb1b3a46eb611753a34",
+    "reports/acquisition/metadata.json": "ee76e19b84a85b924fdf3cee5745f1c71c78cfbe925c709ff45f1f1026727958",
+    "reports/acquisition/selection.json": "f63737e30485025c8f5ae261a58a1b3bdd0decf45467af804abc8858454a279d"
+  },
+  "locked_before_test_utc": "2026-10-30T05:37:03.611733+00:00",
+  "development_runs_sha256": "5e83718fa8c95729a46ab2e3ec897695ab7f344828fffaf20e6ef043098c9c13",
+  "rule": "Every development all-window cell loss <=1.05 capture-only adaptive; choose lowest equally weighted mean cell loss; tie larger gate; if none choose largest gate retaining failure"
+}

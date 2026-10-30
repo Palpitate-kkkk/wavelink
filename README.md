@@ -293,3 +293,17 @@ python -m experiments.acquisition_ber --output results/acquisition
 18 dB 弱路径、ε=1.2 时，32/32 包满足预设捕获判据，BER 为 0.013607；已知边界但只做分数频偏补偿的参考为 0.498958。每个噪声条件 0/512 虚警，一侧 95% 上界仍约 0.5834%。6 dB 有漏检和非安全捕获，ε=5.2 会被错误接受；报告同时计入丢包损失，避免只报接受包 BER。152 项测试通过。
 
 [模型、完整结果与失败](docs/acquisition.md) · [开发选择锁](reports/acquisition/selection.json) · [逐包结果](reports/acquisition/runs.csv) · [虚警统计](reports/acquisition/null_summary.csv)
+
+## 捕获接入自适应统计跟踪（双时钟与统计摄入保护）
+
+```bash
+python -m experiments.captured_tracking_ber --output results/captured_tracking
+```
+
+新增物理时隙/被接纳观测双时钟：缺失不补零、不拟合，先用 LS 启动，凑齐 64 个观测后才使用 LMMSE。导频一致性门限只过滤统计摄入，所有接受包仍正常解调并计分；原创新/复核参数和捕获阈值冻结。
+
+开发锁定门限 0.25，独立测试 160 段场景链路。18 dB、64 包超范围频偏场景的全包损失从 0.128120 降至 0.114746；校准受干扰场景从 0.025794 降至 0.017334。仍未全面胜过固定 LS 或冻结模型，低信噪比捕获与旧历史数据也继续限制性能。
+
+164 项测试、60,416 次真实同步/零频偏栅格检查通过。报告计入漏检、启动延迟、缺失时隙、非安全观测摄入与发送预算，不把接受包 BER 当作全包损失。
+
+[双时钟、完整对照与限制](docs/captured_tracking.md) · [开发锁](reports/captured_tracking/selection.json) · [测试汇总](reports/captured_tracking/summary.csv) · [时钟与拟合事件](reports/captured_tracking/events.csv)
