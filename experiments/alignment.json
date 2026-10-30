@@ -1,0 +1,75 @@
+{
+  "baseline_metadata_sha256": "f48bb590d329c2ec5e01d409e1ef52aa0e97a6e8dd6db5071deb6450776945d3",
+  "gate_selection_sha256": "94a2c1ab22c6dc6c45ecbbf1b9dc11b6365881f4dd643cd604dec25cfcf28b26",
+  "noise_multiples": [
+    2.0,
+    4.0,
+    8.0
+  ],
+  "ebn0_db": [
+    6,
+    18
+  ],
+  "weak_first_powers": [
+    0.01,
+    0.0,
+    0.0,
+    0.0,
+    0.12,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.87,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "development": {
+    "seeds": [
+      301001,
+      301002,
+      301003,
+      301004
+    ],
+    "scenarios": [
+      "stationary",
+      "weak_drift",
+      "gap32",
+      "alias64",
+      "dirty_calibration"
+    ]
+  },
+  "test": {
+    "seeds": [
+      311001,
+      311002,
+      311003,
+      311004,
+      311005,
+      311006,
+      311007,
+      311008,
+      311009,
+      311010,
+      311011,
+      311012,
+      311013,
+      311014,
+      311015,
+      311016
+    ],
+    "scenarios": [
+      "stationary",
+      "weak_drift",
+      "gap32",
+      "alias64",
+      "dirty_calibration",
+      "weak_first"
+    ]
+  }
+}

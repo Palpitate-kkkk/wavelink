@@ -307,3 +307,17 @@ python -m experiments.captured_tracking_ber --output results/captured_tracking
 164 项测试、60,416 次真实同步/零频偏栅格检查通过。报告计入漏检、启动延迟、缺失时隙、非安全观测摄入与发送预算，不把接受包 BER 当作全包损失。
 
 [双时钟、完整对照与限制](docs/captured_tracking.md) · [开发锁](reports/captured_tracking/selection.json) · [测试汇总](reports/captured_tracking/summary.csv) · [时钟与拟合事件](reports/captured_tracking/events.csv)
+
+## 训练标记前沿对齐（实验候选，保留弱首径失败）
+
+```bash
+python -m experiments.alignment_ber --output results/alignment
+```
+
+用现有训练标记的冲激响应估计选择前沿参考，不增加训练或导频。开发锁定尾部功率倍数 8，独立测试包含 192 段场景链路和未参与选参的弱首径场景，并对照原/对齐 LS、冻结与自适应模型。
+
+18 dB 弱路径变化单元的全包损失从同批原自适应的 0.016704 降至 0.012570；但弱首径时 CP 安全定时明显恶化，对齐 LS 也有退化。平均损失改善不能证明找到了真实发送起点，该方法作为实验候选保留。
+
+175 项测试、72,704 次真实同步/零频偏栅格检查通过。
+
+[方法、对照与弱首径反例](docs/alignment.md) · [开发锁](reports/alignment/selection.json) · [配对测试](reports/alignment/summary.csv) · [安全状态转移](reports/alignment/alignment.csv)
