@@ -1,0 +1,372 @@
+{
+  "sample_rate_hz": 1000000,
+  "cp_len": 16,
+  "pilot_spacing": 2,
+  "ebn0_db": [
+    6,
+    18
+  ],
+  "calibration_frames": 64,
+  "symbols_per_frame": 20,
+  "assumed_length": 13,
+  "episode_frames": 320,
+  "post_frames": 224,
+  "guard": {
+    "monitor_window": 16,
+    "check_every": 8,
+    "refresh_every": 32,
+    "fallback_power": 1.0
+  },
+  "states": {
+    "initial": [
+      0.8,
+      0,
+      0,
+      0,
+      0.12,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.08,
+      0,
+      0,
+      0,
+      0
+    ],
+    "new_paths": [
+      0.1,
+      0.0,
+      0.2,
+      0.0,
+      0.0,
+      0.0,
+      0.4,
+      0.0,
+      0.0,
+      0.0,
+      0.2,
+      0.0,
+      0.1,
+      0.0,
+      0.0,
+      0.0,
+      0
+    ],
+    "delay13": [
+      0.1,
+      0.0,
+      0.0,
+      0.0,
+      0.2,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.7,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "delay15": [
+      0.1,
+      0.0,
+      0.0,
+      0.0,
+      0.2,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.7,
+      0.0
+    ],
+    "delay16": [
+      0.1,
+      0.0,
+      0.0,
+      0.0,
+      0.2,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.7
+    ],
+    "weak15": [
+      0.75,
+      0.0,
+      0.0,
+      0.0,
+      0.2,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.05,
+      0.0
+    ],
+    "mild15": [
+      0.79,
+      0.0,
+      0.0,
+      0.0,
+      0.2,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.01,
+      0.0
+    ]
+  },
+  "scenarios": [
+    {
+      "name": "stationary",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "initial",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "persistent15",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "delay15",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "weak15",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "weak15",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "return15",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 64,
+          "state": "initial",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "return_new",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 64,
+          "state": "new_paths",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "repeat64",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 64,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 128,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 192,
+          "state": "initial",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "repeat24",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 24,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 48,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 72,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 96,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 120,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 144,
+          "state": "delay15",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 168,
+          "state": "initial",
+          "noise_factor": 1.0
+        },
+        {
+          "offset": 192,
+          "state": "delay15",
+          "noise_factor": 1.0
+        }
+      ]
+    },
+    {
+      "name": "noise_jump",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "initial",
+          "noise_factor": 4.0
+        }
+      ]
+    },
+    {
+      "name": "mild15",
+      "changes": [
+        {
+          "offset": 0,
+          "state": "mild15",
+          "noise_factor": 1.0
+        }
+      ]
+    }
+  ],
+  "release_checks": 8,
+  "exit_threshold": 1.5,
+  "entry_threshold": 4.0,
+  "baseline_metadata": "reports/innovation/metadata.json",
+  "baseline_metadata_sha256": "8b91d49557bdecb48d003e8b78004eefd9db66a2c339af79fd8fa1f6d3f5cda9",
+  "development": {
+    "seeds": [
+      191001,
+      191002,
+      191003,
+      191004,
+      191005,
+      191006,
+      191007,
+      191008
+    ],
+    "schedule_seed": 192001
+  },
+  "test": {
+    "seeds": [
+      201001,
+      201002,
+      201003,
+      201004,
+      201005,
+      201006,
+      201007,
+      201008,
+      201009,
+      201010,
+      201011,
+      201012,
+      201013,
+      201014,
+      201015,
+      201016,
+      201017,
+      201018,
+      201019,
+      201020,
+      201021,
+      201022,
+      201023,
+      201024,
+      201025,
+      201026,
+      201027,
+      201028,
+      201029,
+      201030,
+      201031,
+      201032
+    ],
+    "schedule_seed": 202001
+  },
+  "innovation_threshold": 2.0,
+  "refit_delays": [
+    32,
+    64
+  ]
+}

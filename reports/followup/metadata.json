@@ -1,0 +1,424 @@
+{
+  "config": {
+    "sample_rate_hz": 1000000,
+    "cp_len": 16,
+    "pilot_spacing": 2,
+    "ebn0_db": [
+      6,
+      18
+    ],
+    "calibration_frames": 64,
+    "symbols_per_frame": 20,
+    "assumed_length": 13,
+    "episode_frames": 320,
+    "post_frames": 224,
+    "guard": {
+      "monitor_window": 16,
+      "check_every": 8,
+      "refresh_every": 32,
+      "fallback_power": 1.0
+    },
+    "states": {
+      "initial": [
+        0.8,
+        0,
+        0,
+        0,
+        0.12,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0.08,
+        0,
+        0,
+        0,
+        0
+      ],
+      "new_paths": [
+        0.1,
+        0.0,
+        0.2,
+        0.0,
+        0.0,
+        0.0,
+        0.4,
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.0,
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+        0
+      ],
+      "delay13": [
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.7,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "delay15": [
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.7,
+        0.0
+      ],
+      "delay16": [
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.7
+      ],
+      "weak15": [
+        0.75,
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.05,
+        0.0
+      ],
+      "mild15": [
+        0.79,
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.01,
+        0.0
+      ]
+    },
+    "scenarios": [
+      {
+        "name": "stationary",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "initial",
+            "noise_factor": 1.0
+          }
+        ]
+      },
+      {
+        "name": "persistent15",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "delay15",
+            "noise_factor": 1.0
+          }
+        ]
+      },
+      {
+        "name": "weak15",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "weak15",
+            "noise_factor": 1.0
+          }
+        ]
+      },
+      {
+        "name": "return15",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "delay15",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 64,
+            "state": "initial",
+            "noise_factor": 1.0
+          }
+        ]
+      },
+      {
+        "name": "return_new",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "delay15",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 64,
+            "state": "new_paths",
+            "noise_factor": 1.0
+          }
+        ]
+      },
+      {
+        "name": "repeat64",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "delay15",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 64,
+            "state": "initial",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 128,
+            "state": "delay15",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 192,
+            "state": "initial",
+            "noise_factor": 1.0
+          }
+        ]
+      },
+      {
+        "name": "repeat24",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "delay15",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 24,
+            "state": "initial",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 48,
+            "state": "delay15",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 72,
+            "state": "initial",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 96,
+            "state": "delay15",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 120,
+            "state": "initial",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 144,
+            "state": "delay15",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 168,
+            "state": "initial",
+            "noise_factor": 1.0
+          },
+          {
+            "offset": 192,
+            "state": "delay15",
+            "noise_factor": 1.0
+          }
+        ]
+      },
+      {
+        "name": "noise_jump",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "initial",
+            "noise_factor": 4.0
+          }
+        ]
+      },
+      {
+        "name": "mild15",
+        "changes": [
+          {
+            "offset": 0,
+            "state": "mild15",
+            "noise_factor": 1.0
+          }
+        ]
+      }
+    ],
+    "release_checks": 8,
+    "exit_threshold": 1.5,
+    "entry_threshold": 4.0,
+    "baseline_metadata": "reports/innovation/metadata.json",
+    "baseline_metadata_sha256": "8b91d49557bdecb48d003e8b78004eefd9db66a2c339af79fd8fa1f6d3f5cda9",
+    "development": {
+      "seeds": [
+        191001,
+        191002,
+        191003,
+        191004,
+        191005,
+        191006,
+        191007,
+        191008
+      ],
+      "schedule_seed": 192001
+    },
+    "test": {
+      "seeds": [
+        201001,
+        201002,
+        201003,
+        201004,
+        201005,
+        201006,
+        201007,
+        201008,
+        201009,
+        201010,
+        201011,
+        201012,
+        201013,
+        201014,
+        201015,
+        201016,
+        201017,
+        201018,
+        201019,
+        201020,
+        201021,
+        201022,
+        201023,
+        201024,
+        201025,
+        201026,
+        201027,
+        201028,
+        201029,
+        201030,
+        201031,
+        201032
+      ],
+      "schedule_seed": 202001
+    },
+    "innovation_threshold": 2.0,
+    "refit_delays": [
+      32,
+      64
+    ]
+  },
+  "source_sha256": {
+    "src/wavelink/__init__.py": "0bd32de7372feb936af66d6096dc2081a95b271fa0210c0a3c09dc61fa929474",
+    "src/wavelink/baseband.py": "8f59ed824e9c1a870209e980bbd910a7c4d39c7a82392abbe99d3edabd7baa59",
+    "src/wavelink/channel.py": "18593324a0aee7a4dfc7c6ee093241a5cfb0493da87665b08793100b4474c0b9",
+    "src/wavelink/estimation.py": "d817eda2eab2c1c096e927981bc25c7085d27d64440adb415b47b59d72fc7e5b",
+    "src/wavelink/followup.py": "bd0966dd237b454a449308b9747f75f1a46b244b35aae70b7cfa8901f4581871",
+    "src/wavelink/guard.py": "a02036e06840d973012ff463e7c557125c21f6571c1cf78aa06a1eb98f7e0220",
+    "src/wavelink/innovation.py": "db1d21dbc4636f60c6be8b3d5f1da70817ff7c7c6555209281c1f78c6d07f2a6",
+    "src/wavelink/receiver.py": "bd6ab319264b327036b2adb200ad4cf2ec08674006eb0f9644266200c181ae44",
+    "src/wavelink/recovery.py": "c244a1ed431e86246c1947778d3aa52489c36b01d9cb54583c22be90e530501d",
+    "src/wavelink/statistics.py": "eb840a7f094f6e762761ae69d0252883530aa5103ac03da5987ac63558c597a0",
+    "src/wavelink/tracking.py": "2c7b771080dd9dab45c7043f3a726003c0fcbb6d4295d4e25c5376b8a5681476",
+    "experiments/__init__.py": "e5fb415835371f7a8ec178d5443a9ee0d01b884962b0a552879673507af52976",
+    "experiments/awgn_ber.py": "66d7da999f0e6e6fa92c66a75c26e34cf70b4065e1feacba606b584d042cf3d4",
+    "experiments/density_ber.py": "5a28f933a02241f12ed8ace67f9f73ca47983d99780de5e9226e78a2bc997f06",
+    "experiments/drift_ber.py": "bb081ecc6490269055fc181612da946ba054fc9574cc4e0ccc51212a5554cad4",
+    "experiments/followup_ber.py": "a43bf3f2faf14e69e1272760ffb656e2f44d2c9ea6656c4780976ba1c3de7d5d",
+    "experiments/generalization_ber.py": "f8bd3106a75ef921a8d8afd88d2ae580b22fb10a4283017de5c28e878c833feb",
+    "experiments/guard_ber.py": "cde3b98f904a4024e6ecac4a053e60750ebde6923e3fbe1ea6d4d26d5a6502cc",
+    "experiments/innovation_ber.py": "ba979121dc53c906e4a370a3eda0f909bbe4564454720ad5ca30a60faa96b741",
+    "experiments/learned_ber.py": "7d54e69f61a10a4386c1408f8710ef7c0d1f34efa38a7733d557a5cff88b6541",
+    "experiments/lmmse_ber.py": "a62d6266bb9de08d727f75909df1d09f5b74d0dd26171f36e4994d810504d464",
+    "experiments/multipath_ber.py": "297cd29d0bd1aea5e7af7fa1bfb9356742400a546d3809d9cecedc0887bacf3f",
+    "experiments/recovery_ber.py": "2abb68f0647b1599dced8d5c168f1c5e372df5ac0a25d221f8873eeb5f28ed25",
+    "experiments/robustness_ber.py": "e6cf337a4bb48e900bf479511578edef8345c00d829c7dd91379540041ce2c8d",
+    "experiments/tapls_ber.py": "39454d4f40a57dd763159216a1d037e0d8d900652b5d157af4bdd62b9cc8c3d3",
+    "experiments/triggered_ber.py": "7908281a6652bcebbbd683cca370ef52bf21422c1db1c8c33c04e6f2a2948ed8",
+    "experiments/followup.json": "aa66adb34e0ee8ab5fbf8f5e68f8ef0e3340b061a22a08e08eb0dffe1cdd71e1"
+  },
+  "selection_sha256": "9cf01a4a3d999e8425ccd5be6273721913a4ac607dee9a4b513fd196bce6a226",
+  "test_started_at_utc": "2026-10-30T00:31:03.338122+00:00",
+  "finished_at_utc": "2026-10-30T00:33:47.849221+00:00",
+  "command": [
+    "python",
+    "-m",
+    "experiments.followup_ber",
+    "--output",
+    "results/followup",
+    "--plot"
+  ],
+  "base_commit": "7ef5b156faff2c98b810c5bff438c007abd2aacc",
+  "working_tree_dirty": true,
+  "python": "3.13.5",
+  "numpy": "2.4.1",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "causality": "Current estimate and score precede ingestion; all trigger mechanisms share cooldown; one effective rebuild per frame, usable next frame; no final unused update",
+  "scope": "New-seed replication with fixed dense geometry/energy, synthetic independent block-static taps; no hardware or unseen-scenario certification",
+  "uncertainty": "Whole independent episodes, paired differences vs shared-data baselines; scenarios reuse latent streams; no pooling frames as replicates",
+  "cost": "All schedule bookkeeping is timed; follow-ups reuse cached moments, record probe/model solve time and count effective rebuilds; pending plans at episode end not executed",
+  "stopping_rule": "Development selection persisted before test; no test retuning; failed cells retained"
+}

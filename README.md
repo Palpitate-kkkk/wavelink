@@ -242,3 +242,17 @@ python -m experiments.innovation_ber --output results/innovation --plot
 [公式、开发规则与收益边界](docs/innovation.md) · [参数锁](reports/innovation/selection.json) · [测试结果](reports/innovation/summary.csv) · [有效更新响应](reports/innovation/responses.csv)
 
 105 项测试、360/360 NMSE 残差检查和 72/72 Oracle BER 检查通过。弱延迟 15、18 dB 的 BER 从旧完整模型的 0.031494 降至 0.013849；32 段测试链路均在变化后 1..9 帧内首次重建。静态与仅噪声变化场景输出不变，但低 SNR 弱路径下仍未胜过周期更新，部分路径恢复场景也不及原回退策略。额外缓存、检查和矩阵求解成本完整记录。
+
+## 触发后的单次延迟复核（已验证）
+
+```bash
+python -m experiments.followup_ber --output results/followup --plot
+```
+
+创新事件后安排一次延迟拟合，尽量减少首次窗口中旧样本的残留。新观测重建会取消或替换计划；复核不自行重排，所有机制共用冷却期。独立开发选择 64 帧，锁定后使用新的保留测试种子评测。
+
+![One-shot delayed refit](reports/followup/followup.svg)
+
+[计划规则、独立结果与代价](docs/followup.md) · [选择锁](reports/followup/selection.json) · [汇总](reports/followup/summary.csv) · [计划日志](reports/followup/plans.csv)
+
+116 项测试、432/432 NMSE 残差检查和 72/72 Oracle BER 检查通过。18 dB 弱路径单元的晚期 NMSE 从 0.005578 降至 0.002597，整段 BER 从 0.013843 降至 0.012832；本批场景平均重建从 3.38542 增至 3.53819。repeat64、6 dB 的平均 NMSE 约退化 0.68%，低 SNR 下仍未全面胜过周期策略，失败边界与未执行计划完整保留。
