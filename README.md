@@ -281,3 +281,15 @@ python -m experiments.cfo_ber --output results/cfo
 64 段场景链路上，18 dB 弱路径、归一化频偏 0.05（781.25 Hz）的 post_all BER 从 0.104093 降至 0.012490，同批零频偏参考为 0.012480。超出捕获范围的 1.2 仍接近随机判决，零频偏时估计噪声也可能轻微退化。138 项测试、98,304 次 Oracle 补偿栅格检查通过；共享潜在噪声的配对方式和剩余 CFO 统计边界完整披露。
 
 [模型、结果、开销与失败边界](docs/cfo.md) · [测试协议](reports/cfo/protocol.json) · [BER 与配对 SE](reports/cfo/summary.csv) · [频偏估计误差](reports/cfo/frequency_errors.csv)
+
+## 有限时隙帧搜索与整数频偏捕获（含丢包和错误捕获）
+
+```bash
+python -m experiments.acquisition_ber --output results/acquisition
+```
+
+新增固定重复头与非重复标记，在 64 个起点、五个整数频偏候选中搜索；开发样本锁定阈值，再验证 768 个场景包和 1,024 个 AWGN 空时隙。捕获后接固定 LS17/ZF/QPSK，本轮尚未接入自适应统计跟踪。
+
+18 dB 弱路径、ε=1.2 时，32/32 包满足预设捕获判据，BER 为 0.013607；已知边界但只做分数频偏补偿的参考为 0.498958。每个噪声条件 0/512 虚警，一侧 95% 上界仍约 0.5834%。6 dB 有漏检和非安全捕获，ε=5.2 会被错误接受；报告同时计入丢包损失，避免只报接受包 BER。152 项测试通过。
+
+[模型、完整结果与失败](docs/acquisition.md) · [开发选择锁](reports/acquisition/selection.json) · [逐包结果](reports/acquisition/runs.csv) · [虚警统计](reports/acquisition/null_summary.csv)
