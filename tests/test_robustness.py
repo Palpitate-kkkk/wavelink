@@ -36,8 +36,11 @@ class RobustnessTests(unittest.TestCase):
             a,b=legacy_phases(cfg)[row['phase']];v=values[row['receiver']][a:b]
             self.assertEqual(int(v[:,3].sum()),int(row['errors']))
             self.assertAlmostEqual(v[:,0].mean(),float(row['ber']),places=15)
-            self.assertAlmostEqual(v[:,1].mean(),float(row['ensemble_nmse']),places=15)
-            self.assertAlmostEqual(v[:,2].mean(),float(row['predicted_nmse']),places=15)
+            # Saved floating MSE summaries can differ by a few ULPs across
+            # BLAS/CPU backends; integer error counts above remain exact.
+            np.testing.assert_allclose(v[:,1:3].mean(axis=0),
+                [float(row['ensemble_nmse']),float(row['predicted_nmse'])],
+                rtol=1e-12,atol=1e-14)
 
     def test_explicit_step_matches_legacy_boundary_exactly(self):
         cfg=json.loads(Path('experiments/drift.json').read_text())

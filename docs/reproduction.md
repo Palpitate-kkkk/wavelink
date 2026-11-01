@@ -67,3 +67,5 @@ python -m wavelink.audit --report results/support
 `.github/workflows/ci.yml` 在 push / pull request / 手动触发时安装项目并执行 `make check`，配置 Ubuntu 24.04、Python 3.11 / 3.13。实际成功与否以 [Actions](https://github.com/Palpitate-kkkk/wavelink/actions) 为准。动作版本依据官方 [checkout](https://github.com/actions/checkout) 与 [setup-python](https://github.com/actions/setup-python) 用法。
 
 重生成总报告图需安装可选绘图依赖 `python -m pip install -e ".[plots]"`，再执行 `python tools/build_overview_figures.py`。默认自动检查仅核验保存的 SVG 及其输入，不安装绘图依赖或重跑完整 224 段实验。
+
+首次 Linux CI 在旧 NMSE 保存值回归测试中暴露了约 5.6–6.7×10⁻¹⁶ 的平台舍入差异：原断言要求小数点后 15 位相同。该处现以 `rtol=1e-12, atol=1e-14` 比较浮点 NMSE；原误码数仍逐项严格相等，四段复跑的整数计数、事件、掩码与文件哈希也未放宽。没有修改旧实验数据或接收算法来通过测试。
