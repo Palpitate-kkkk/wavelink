@@ -17,6 +17,8 @@ python -m wavelink.audit --report reports/support
 python -m wavelink.audit --report reports/crosscheck
 python -m wavelink.audit --report reports/overview
 python -m wavelink.audit --report reports/iq_replay
+python -m wavelink.audit --report reports/sigmf
+python -m experiments.sigmf_demo
 python -m experiments.iq_file_demo
 python -m experiments.crosscheck --output results/crosscheck
 python -m wavelink.audit --report results/crosscheck
@@ -24,7 +26,7 @@ python examples/noiseless_loopback.py
 python -m experiments.replay_reference
 ```
 
-该流程只读版本控制内的报告，不覆盖它们。任一子步骤失败会返回非零状态。它覆盖 203 项自动测试、五份报告的源码 / 产物清单、12,800 bit 无噪声回环，四段突发接收实验，以及独立标准库参考的数值交叉核对。
+该流程只读版本控制内的报告，不覆盖它们。任一子步骤失败会返回非零状态。它覆盖 212 项自动测试、六份报告的源码 / 产物清单、12,800 bit 无噪声回环，四段突发接收实验，以及独立标准库参考的数值交叉核对。
 
 ## 四段复跑具体检查什么
 
@@ -75,3 +77,7 @@ python -m wavelink.audit --report results/support
 ## v0.24 文件回放检查
 
 `make check` 现在包含临时合成文件生成、96 时隙文件 / 内存判决及事件比较，并在结束时清理临时二进制文件。报告记录的是受控文件接口一致性；实际外部文件的输入 / 输出校验请按 [I/Q 回放说明](iq_replay.md)使用专用 `run` / `verify` 命令。
+
+## v0.25 SigMF 检查
+
+`make check` 新增受限 SigMF 导入、float32 / 未削顶 int16 / 削顶 int16 三种编码的临时集成检查；每种文件路径与直接量化数据的路径比较，原始未量化数据另作诊断基线。详见 [导入说明](sigmf.md)。该检查不下载外部录制文件或接入硬件。

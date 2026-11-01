@@ -1,0 +1,4 @@
+case,datatype,slots,first_sample,suffix_samples,scalar_scale,rail_components,evaluator_clipped_components,sample_max_error,quantization_nmse,decoded_slots,rejected_slots,missing_slots,payload_errors,erased_bits,decisions_changed_vs_original,direct_quantized_reference_mismatches,events_equal
+float32,cf32_le,96,7,5,1.0,0,0,2.3133307670794281e-07,6.431373774278995e-16,91,1,4,5421,4800,0,0,True
+int16,ci16_le,96,7,5,0.00016355825827806152,0,0,0.00011543307846120068,5.059493271197542e-09,91,1,4,5419,4800,12,0,True
+clipped_int16,ci16_le,96,7,5,4.088956456951538e-05,20707,20703,3.5669193860993147,0.04348282659105869,91,1,4,5619,4800,1280,0,True
