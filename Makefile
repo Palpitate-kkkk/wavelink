@@ -1,9 +1,9 @@
 PYTHON ?= python3
 
-.PHONY: check test audit smoke replay support crosscheck figures iq-demo sigmf-demo
+.PHONY: check test audit smoke replay support crosscheck figures iq-demo sigmf-demo clock-demo
 
 # Run from repository root with the environment activated.
-check: test audit smoke replay crosscheck iq-demo sigmf-demo
+check: test audit smoke replay crosscheck iq-demo sigmf-demo clock-demo
 
 test:
 	$(PYTHON) -m unittest discover -s tests -v
@@ -15,6 +15,7 @@ audit:
 	$(PYTHON) -m wavelink.audit --report reports/overview
 	$(PYTHON) -m wavelink.audit --report reports/iq_replay
 	$(PYTHON) -m wavelink.audit --report reports/sigmf
+	$(PYTHON) -m wavelink.audit --report reports/clock
 
 smoke:
 	$(PYTHON) examples/noiseless_loopback.py
@@ -37,3 +38,6 @@ iq-demo:
 
 sigmf-demo:
 	$(PYTHON) -m experiments.sigmf_demo
+
+clock-demo:
+	$(PYTHON) -m experiments.clock_audit

@@ -1,0 +1,7 @@
+{
+  "input_variance": 1.0032877404041922,
+  "output_variance": 0.9291152599930413,
+  "predicted_unit_input_variance": 0.9272512738876905,
+  "lag1_covariance_real": 0.09586483238447766,
+  "scope": "One fixed white-noise realization; expected gain is sum of squared interpolation weights; output is not treated as white AWGN."
+}

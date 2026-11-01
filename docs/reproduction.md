@@ -18,6 +18,8 @@ python -m wavelink.audit --report reports/crosscheck
 python -m wavelink.audit --report reports/overview
 python -m wavelink.audit --report reports/iq_replay
 python -m wavelink.audit --report reports/sigmf
+python -m wavelink.audit --report reports/clock
+python -m experiments.clock_audit
 python -m experiments.sigmf_demo
 python -m experiments.iq_file_demo
 python -m experiments.crosscheck --output results/crosscheck
@@ -26,7 +28,7 @@ python examples/noiseless_loopback.py
 python -m experiments.replay_reference
 ```
 
-该流程只读版本控制内的报告，不覆盖它们。任一子步骤失败会返回非零状态。它覆盖 212 项自动测试、六份报告的源码 / 产物清单、12,800 bit 无噪声回环，四段突发接收实验，以及独立标准库参考的数值交叉核对。
+该流程只读版本控制内的报告，不覆盖它们。任一子步骤失败会返回非零状态。它覆盖 221 项自动测试、七份报告的源码 / 产物清单、12,800 bit 无噪声回环，四段突发接收实验，以及独立标准库参考的数值交叉核对。
 
 ## 四段复跑具体检查什么
 
@@ -81,3 +83,7 @@ python -m wavelink.audit --report results/support
 ## v0.25 SigMF 检查
 
 `make check` 新增受限 SigMF 导入、float32 / 未削顶 int16 / 削顶 int16 三种编码的临时集成检查；每种文件路径与直接量化数据的路径比较，原始未量化数据另作诊断基线。详见 [导入说明](sigmf.md)。该检查不下载外部录制文件或接入硬件。
+
+## v0.26 已知时钟检查
+
+`make check` 包含固定三种采样率、独立 DFT 合成与窗口 sinc 校正、接收账目和波形重建检查。默认只写临时目录并清理；保存新产物和一维流转换命令见[采样率说明](rate_conversion.md)。校正是已知率的离线前端，使用未来样本，不能当作与旧捕获器等预算的 BER 比较。
