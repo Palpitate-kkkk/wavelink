@@ -1,0 +1,2 @@
+slots,decoded_slots,rejected_slots,missing_slots,offered_bits,decoded_bits,erased_bits,statistics_consumed,bootstrap_slot,final_slot_consumed,payload_errors,in_memory_bit_mismatches,events_equal,input_source
+96,91,1,4,92160,87360,4800,82,63,False,5421,0,True,"synthetic fixed-slot files, NOT hardware capture"

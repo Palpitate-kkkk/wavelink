@@ -16,13 +16,15 @@ python -m wavelink.audit --report reports/reference
 python -m wavelink.audit --report reports/support
 python -m wavelink.audit --report reports/crosscheck
 python -m wavelink.audit --report reports/overview
+python -m wavelink.audit --report reports/iq_replay
+python -m experiments.iq_file_demo
 python -m experiments.crosscheck --output results/crosscheck
 python -m wavelink.audit --report results/crosscheck
 python examples/noiseless_loopback.py
 python -m experiments.replay_reference
 ```
 
-该流程只读版本控制内的报告，不覆盖它们。任一子步骤失败会返回非零状态。它覆盖 197 项自动测试、四份报告的源码 / 产物清单、12,800 bit 无噪声回环，四段突发接收实验，以及独立标准库参考的数值交叉核对。
+该流程只读版本控制内的报告，不覆盖它们。任一子步骤失败会返回非零状态。它覆盖 203 项自动测试、五份报告的源码 / 产物清单、12,800 bit 无噪声回环，四段突发接收实验，以及独立标准库参考的数值交叉核对。
 
 ## 四段复跑具体检查什么
 
@@ -69,3 +71,7 @@ python -m wavelink.audit --report results/support
 重生成总报告图需安装可选绘图依赖 `python -m pip install -e ".[plots]"`，再执行 `python tools/build_overview_figures.py`。默认自动检查仅核验保存的 SVG 及其输入，不安装绘图依赖或重跑完整 224 段实验。
 
 首次 Linux CI 在旧 NMSE 保存值回归测试中暴露了约 5.6–6.7×10⁻¹⁶ 的平台舍入差异：原断言要求小数点后 15 位相同。该处现以 `rtol=1e-12, atol=1e-14` 比较浮点 NMSE；原误码数仍逐项严格相等，四段复跑的整数计数、事件、掩码与文件哈希也未放宽。没有修改旧实验数据或接收算法来通过测试。
+
+## v0.24 文件回放检查
+
+`make check` 现在包含临时合成文件生成、96 时隙文件 / 内存判决及事件比较，并在结束时清理临时二进制文件。报告记录的是受控文件接口一致性；实际外部文件的输入 / 输出校验请按 [I/Q 回放说明](iq_replay.md)使用专用 `run` / `verify` 命令。
