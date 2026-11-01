@@ -1,0 +1,5 @@
+{
+  "seeds": [351001, 351002, 351003, 351004],
+  "noise_variances": [0.0, 0.05],
+  "absolute_tolerance": 2e-10
+}

@@ -1,0 +1,24 @@
+{
+  "source_sha256": {
+    "reports/reference/summary.csv": "c3523960c4c467352bb555745dfb548b99899bbca6bdcf10d0488296407c2fdf",
+    "reports/reference/windows.csv": "db0f98d1fcb6d88ed29c3e9c96d210fc643ab784c84e0693acb4d31365f172bb",
+    "reports/support/summary.csv": "57fc1f7ea70ababf4bc2d7460db170d7e80daa5a34fcbc4b91c8e75f2c515883",
+    "tools/build_overview_figures.py": "452f2a6b417591905deb90abec1a8dbc0a92b05188feecbfd572c101f00bf5ae"
+  },
+  "artifact_sha256": {
+    "paired_loss.svg": "c20330a0b16343064ed54bd686385e16ea851156c7621ea5763302dba08ccc48",
+    "support_bias.svg": "427d66a16288aa73f135acfce6bb87fb504e3495739af36ef84476c342638823",
+    "weak_path_windows.svg": "0eae6ead8aea58bca847d7ea214aef25bbdcf99eed1c4119d8a820eec5fb1f2b"
+  },
+  "python": "3.13.5",
+  "matplotlib": "3.10.8",
+  "numpy": "2.4.1",
+  "base_commit": "28f45100f18fa13122c5ca60cb2058695365a0e3",
+  "command": [
+    "python",
+    "tools/build_overview_figures.py",
+    "--preview-dir",
+    "/tmp/wavelink-overview"
+  ],
+  "scope": "Plots of existing fixed reports only; no additional statistical trials; paired error bars are one standard error, not confidence intervals."
+}

@@ -14,11 +14,15 @@ Make 只是聚合已有 Python 命令；Windows 或没有 Make 时可逐条执�
 python -m unittest discover -s tests -v
 python -m wavelink.audit --report reports/reference
 python -m wavelink.audit --report reports/support
+python -m wavelink.audit --report reports/crosscheck
+python -m wavelink.audit --report reports/overview
+python -m experiments.crosscheck --output results/crosscheck
+python -m wavelink.audit --report results/crosscheck
 python examples/noiseless_loopback.py
 python -m experiments.replay_reference
 ```
 
-该流程只读版本控制内的报告，不覆盖它们。任一子步骤失败会返回非零状态。它覆盖 194 项自动测试、两份报告的源码 / 产物清单、12,800 bit 无噪声回环，以及四段突发接收实验。
+该流程只读版本控制内的报告，不覆盖它们。任一子步骤失败会返回非零状态。它覆盖 197 项自动测试、四份报告的源码 / 产物清单、12,800 bit 无噪声回环，四段突发接收实验，以及独立标准库参考的数值交叉核对。
 
 ## 四段复跑具体检查什么
 
@@ -55,3 +59,11 @@ python -m wavelink.audit --report results/support
 ## 来源边界
 
 清单校验确认文件与声明哈希匹配；实际复跑进一步检查当前环境的计算输出。两者仍不替代可信签名、独立实现或硬件实验。旧阶段代码与协议故意冻结，新阶段通过新模块扩展；改动冻结文件会触发拒绝，需要明确建立新协议，不能悄悄重写旧结果。
+
+## v0.23 独立实现与自动检查
+
+本机无 MATLAB / Octave，本阶段改用标准库独立参考：`validation/reference_receiver.py` 不导入 NumPy 或 WaveLink，以直接 DFT、逐样本卷积和带主元消元计算同一固定夹具。8 个案例用于验证两套数值实现与硬判决一致，不作为新增 BER 性能证据。它是同语言不同实现，不能称为跨语言验证。
+
+`.github/workflows/ci.yml` 在 push / pull request / 手动触发时安装项目并执行 `make check`，配置 Ubuntu 24.04、Python 3.11 / 3.13。实际成功与否以 [Actions](https://github.com/Palpitate-kkkk/wavelink/actions) 为准。动作版本依据官方 [checkout](https://github.com/actions/checkout) 与 [setup-python](https://github.com/actions/setup-python) 用法。
+
+重生成总报告图需安装可选绘图依赖 `python -m pip install -e ".[plots]"`，再执行 `python tools/build_overview_figures.py`。默认自动检查仅核验保存的 SVG 及其输入，不安装绘图依赖或重跑完整 224 段实验。
