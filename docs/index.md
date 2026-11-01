@@ -9,11 +9,13 @@
 | 因果更新 | [触发更新](triggered.md)、[冻结泛化](generalization.md)、[支撑告警](guard.md)、[恢复](recovery.md) |
 | 资源与跟踪 | [导频密度](density.md)、[协方差创新](innovation.md)、[延迟复核](followup.md)、[本机运行成本](runtime.md) |
 | 同步与捕获 | [已知边界 CFO](cfo.md)、[未知起点与整数 CFO](acquisition.md)、[捕获后的统计跟踪](captured_tracking.md) |
-| 弱首径审计 | [移动物理窗口及其反例](alignment.md)、[保留原窗的相位参考（最新）](reference.md) |
-| 工程约定 | [实验规范](experiments.md)、[验证记录](validation.md)、[路线图](roadmap.md)、[阶段归档](history.md) |
+| 弱首径审计 | [移动物理窗口及其反例](alignment.md)、[保留原窗的相位参考](reference.md)、[带符号时延先验审计（最新）](support.md) |
+| 工程约定 | [实验规范](experiments.md)、[验证记录](validation.md)、[路线图](roadmap.md)、[阶段归档](history.md)、[一键检查与复跑](reproduction.md) |
 
 ## 文件完整性
 
 v0.21 的 `reports/reference/metadata.json` 同时声明实验源码 / 配置与 CSV / 冻结协议的 SHA-256。使用 `python -m wavelink.audit --report reports/reference` 核验，失败时返回非零退出状态。命令只读文件，并限制校验路径在项目和报告目录内部。
 
 旧报告未统一保存产物清单，因此不能期待它们全部通过这一新入口。哈希一致仅表明文件与当前清单匹配；清单本身也能被修改，所以它不替代签名、可信发布或独立复现。
+
+`reports/support/` 同样保存源码和产物清单。`make check` 汇集单元测试、两份清单校验、无噪声回环及四段保存结果的端到端复跑。详见[复现说明](reproduction.md)。

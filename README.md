@@ -2,7 +2,7 @@
 
 **面向信道统计失配与非理想同步的 OFDM 接收机实验平台。**
 
-电磁场与无线技术 / 通信方向的项目实践。以可复现的仿真比较 LS、LMMSE 与因果统计跟踪，记录有效条件、失败边界和资源成本。当前版本 **v0.21**，所有性能数字均为软件仿真结果。
+电磁场与无线技术 / 通信方向的项目实践。以可复现的仿真比较 LS、LMMSE 与因果统计跟踪，记录有效条件、失败边界和资源成本。当前版本 **v0.22**，所有性能数字均为软件仿真结果。
 
 ## 研究问题与已实现能力
 
@@ -26,17 +26,27 @@ python -m pip install -e .
 python -m unittest discover -s tests -v
 python examples/noiseless_loopback.py
 python -m wavelink.audit --root . --report reports/reference
+python -m wavelink.audit --root . --report reports/support
+python -m experiments.replay_reference
 ```
 
 Windows 激活命令为 `.venv\Scripts\activate`。无噪声示例应得到 0 个比特错误；这仅验证基础回环。校验命令检查已保存结果与所声明的源码 / 文件哈希是否一致，不重新运行实验，也不证明来源真实性。
 
-## 最新研究：保持原窗的统计相位参考
+## 最新进展：先验一致性与可执行复现
+
+v0.22 新增显式负时延 LS 与四种先验的冻结对照。若相位坐标和先验一起变换，估计应还原原 LS；本轮含噪观测中的对应差异不超过 4.35×10⁻¹⁴。固定因果先验的参考变换会改变物理先验，不能将收益归因于坐标变化本身。导频门限仍可能通过失配样本。
+
+[先验审计与数学约定](docs/support.md) · [四段旧实验复跑说明](docs/reproduction.md)
+
+环境激活后可执行 `make check`，一次完成测试、两份新报告的完整性校验、无噪声回环及四段端到端复跑。Windows 或未安装 Make 时，逐条执行上面的 Python 命令即可。复跑重用旧种子，用于结果一致性检查，不增加独立统计证据。
+
+## 前一阶段：保持原窗的统计相位参考
 
 v0.20 发现：向显著训练抽头移动 FFT 窗口可能跳过弱首径。v0.21 保留捕获器给出的物理窗口，只对统计接收机输入作频域相位变换，估计后换回原参考，再均衡原始数据。
 
 该设计避免了**由这次窗口移动新增**的物理定时风险，原捕获错误与变换后的模型失配仍可能存在。它并不保证找到了真实首径，也不保证损失优于每个对照。
 
-[最新方法、结果及局限](docs/reference.md) · [全部报告索引](docs/index.md) · [路线图](docs/roadmap.md)
+[相位参考方法、结果及局限](docs/reference.md) · [全部报告索引](docs/index.md) · [路线图](docs/roadmap.md)
 
 重新运行本阶段的冻结比较：
 
