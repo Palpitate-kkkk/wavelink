@@ -95,3 +95,5 @@ python -m wavelink.audit --root . --report results/reference
 [未知采样时钟偏差：训练标记估计实验](docs/clock_estimation.md)
 
 [采样时钟估计与 OFDM 校正闭环](docs/clock_link.md)
+
+[采样时钟估计拒绝后的回退实验](docs/clock_fallback.md)
