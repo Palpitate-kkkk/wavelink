@@ -97,3 +97,5 @@ python -m wavelink.audit --root . --report results/reference
 [采样时钟估计与 OFDM 校正闭环](docs/clock_link.md)
 
 [采样时钟估计拒绝后的回退实验](docs/clock_fallback.md)
+
+[收尾验证：回退质量门限与独立测试](docs/clock_fallback_gate.md)

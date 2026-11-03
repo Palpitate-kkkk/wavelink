@@ -10,7 +10,7 @@ from wavelink.clock_estimation import estimate_clock
 from wavelink.rate_conversion import resample_complex
 
 
-def episode(ppm, snr, seed):
+def episode(ppm, snr, seed, *, diagnostics=None):
     rng = np.random.default_rng(seed)
     starts = np.arange(1000, 82000, 10000)
     marker = np.fft.ifft(np.r_[0, rng.choice([-1., 1.], 39), np.zeros(88)])
@@ -40,6 +40,8 @@ def episode(ppm, snr, seed):
             raise
         estimate = None
     corrected_input = y*carrier.conj()
+    if diagnostics is not None:
+        diagnostics(corrected_input, marker, starts)
     estimated = None if estimate is None else Fraction(
         1_000_000_000, round(estimate['rate_ratio']*1_000_000_000)
     ).limit_denominator(100000)
