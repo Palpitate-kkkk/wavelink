@@ -93,3 +93,5 @@ python -m wavelink.audit --root . --report results/reference
 项目适合按“项目实践 / 科研实践”展示。仅将实际实现和已经验证的结果写入材料；外场测量、实时部署及未实现功能不列为成果。
 
 [未知采样时钟偏差：训练标记估计实验](docs/clock_estimation.md)
+
+[采样时钟估计与 OFDM 校正闭环](docs/clock_link.md)
